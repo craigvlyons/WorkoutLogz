@@ -29,6 +29,7 @@ import com.example.makeitso.common.snackbar.SnackbarManager
 import com.example.workoutlogz.feature_workouts.presentation.common.composable.PermissionDialog
 import com.example.workoutlogz.feature_workouts.presentation.common.composable.RationaleDialog
 import com.example.workoutlogz.feature_workouts.presentation.exercise_app.ExerciseAppScreen
+import com.example.workoutlogz.feature_workouts.presentation.settings_screen.SettingScreen
 import com.example.workoutlogz.feature_workouts.presentation.splashScreen.SplashScreen
 import com.example.workoutlogz.ui.theme.WorkoutLogzTheme
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -110,12 +111,13 @@ fun NavGraphBuilder.WorkoutGraph(appState: WorkoutAppState){
         ExerciseAppScreen(openScreen = {route -> appState.navigate(route)})
     }
 
-//    composable(SETTINGS_SCREEN) {
-//        SettingsScreen(
+    composable(SETTINGS_SCREEN) {
+        SettingScreen(
+            openAndPopUp = { route, popUp -> appState.navigateAndPopUp(route, popUp)}
 //            restartApp = { route -> appState.clearAndNavigate(route) },
 //            openScreen = { route -> appState.navigate(route) }
-//        )
-//    }
+        )
+    }
 //
 //    composable(STATS_SCREEN) {
 //        StatsScreen()

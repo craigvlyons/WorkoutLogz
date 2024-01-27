@@ -19,13 +19,26 @@ fun ExerciseAppScreen(
     openScreen: (String) -> Unit,
     viewModel: ExerciseAppViewModel = hiltViewModel()
 ) {
+    ExerciseScreenContent(
+        onSettingsClick =  {viewModel.onSettingsClick(openScreen)} ,
+        openScreen = openScreen
+    )
+}
+
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+@Composable
+fun ExerciseScreenContent(
+    modifier: Modifier = Modifier,
+    onSettingsClick: ((String ) -> Unit) -> Unit ,
+    openScreen : (String) -> Unit
+){
     Scaffold(
         topBar = {
             TopToolbar_IconTitleIcon(
                 modifier = Modifier,
                 primaryActionIcon = R.drawable.ic_menu,
                 title = R.string.ExerciseTitle,
-                primaryAction = { /* */ },
+                primaryAction = {  onSettingsClick(openScreen)},
                 secondaryActionIcon = R.drawable.ic_menu,
                 secondaryAction = { /* Handle secondary action here */ }
             )
@@ -81,7 +94,9 @@ fun ExerciseListSection() {
 
 @Composable
 fun ExerciseListItem(day: String, description: String) {
-    Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .padding(16.dp)) {
         Text(day, style = MaterialTheme.typography.h6)
         Text(description, style = MaterialTheme.typography.body1)
         Divider(color = Color.Gray, thickness = 1.dp)

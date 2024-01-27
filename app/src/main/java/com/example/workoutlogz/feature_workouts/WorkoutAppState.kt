@@ -11,11 +11,12 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 
 @Stable
-class WorkoutAppState(val scaffoldState: ScaffoldState,
-                      val navController: NavHostController,
-                      private val snackbarManager: SnackbarManager,
-                      private val resources: Resources,
-                      coroutineScope: CoroutineScope
+class WorkoutAppState(
+    val scaffoldState: ScaffoldState,
+    val navController: NavHostController,
+    private val snackbarManager: SnackbarManager,
+    private val resources: Resources,
+    coroutineScope: CoroutineScope
 ) {
     init {
         // Launch a coroutine for snackbar message handling

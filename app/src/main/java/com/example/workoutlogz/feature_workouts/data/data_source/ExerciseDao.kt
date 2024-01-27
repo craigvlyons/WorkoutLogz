@@ -10,25 +10,41 @@ import com.example.workoutlogz.feature_workouts.data.models.Exercise
 import com.example.workoutlogz.feature_workouts.data.models.ExerciseList
 import com.example.workoutlogz.feature_workouts.data.models.ExerciseListWithWorkouts
 import com.example.workoutlogz.feature_workouts.data.models.Workout
+import kotlinx.coroutines.flow.Flow
 
 
 @Dao
 interface ExerciseDao {
-    @Insert
-    fun insertExerciseList(exerciseList: ExerciseList)
+    // Exercise Table
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(exercises: List<Exercise>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertExercise(exercise: Exercise)
+
+    @Query("SELECT * FROM exercises")
+    fun getAllExercises(): Flow<List<Exercise>>
+
+
+
+    // Workout table
     @Insert
     fun insertWorkout(workout: Workout)
+    @Query("SELECT * FROM Workout")
+    fun getAllWorkouts(): Flow<List<Workout>>
 
+
+
+
+    // Exercise List Table
     @Transaction
     @Query("SELECT * FROM ExerciseList WHERE id = :exerciseListId")
     fun getExerciseListWithWorkouts(exerciseListId: Int): List<ExerciseListWithWorkouts>
 
+    @Insert
+    fun insertExerciseList(exerciseList: ExerciseList)
 
-    // list of exercise names
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(exercises: List<Exercise>)
 
-    @Query("SELECT * FROM exercises")
-    fun getAllExercises(): LiveData<List<Exercise>>
+
 }

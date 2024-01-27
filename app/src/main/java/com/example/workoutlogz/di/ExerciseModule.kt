@@ -8,6 +8,12 @@ import com.example.workoutlogz.feature_workouts.WorkoutApp
 import com.example.workoutlogz.feature_workouts.data.data_source.ExerciseDB
 import com.example.workoutlogz.feature_workouts.data.data_source.ExerciseDao
 import com.example.workoutlogz.feature_workouts.data.models.Exercise
+import com.example.workoutlogz.feature_workouts.data.repository.ExerciseRepositoryImpl
+import com.example.workoutlogz.feature_workouts.data.repository.WorkoutRepositoryImpl
+import com.example.workoutlogz.feature_workouts.domain.repository.ExerciseRepository
+import com.example.workoutlogz.feature_workouts.domain.repository.WorkoutRepository
+import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.GetAllExerciseUseCase
+import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.WorkoutUseCases
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -48,4 +54,24 @@ object ExerciseModule {
         }
     }
 
+    @Provides
+    @Singleton
+    fun provideWorkoutRepository(db: ExerciseDB) : WorkoutRepository{
+        return WorkoutRepositoryImpl(db.exerciseDao)
+    }
+
+    @Provides
+    @Singleton
+    fun provideExerciseRepository(db: ExerciseDB) : ExerciseRepository{
+        return ExerciseRepositoryImpl(db.exerciseDao)
+    }
+
+    // UseCases
+    @Provides
+    @Singleton
+    fun provideWorkoutUseCases(repository: ExerciseRepository) : WorkoutUseCases{
+        return WorkoutUseCases(
+            getAllExerciseUseCase = GetAllExerciseUseCase(repository)
+        )
+    }
 }
