@@ -2,7 +2,6 @@ package com.example.workoutlogz.feature_workouts.presentation.common.composable
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -11,27 +10,27 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material3.*
+import androidx.compose.material.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.workoutlogz.R
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
+import androidx.compose.material.Icon
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
 @ExperimentalMaterialApi
 fun BasicToolbar(@StringRes title: Int) {
-  TopAppBar(title = { Text(stringResource(title)) }, colors = toolbarColor())
+  TopAppBar(title = { Text(stringResource(title)) }, contentColor = MaterialTheme.colors.primary)
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
 fun ActionToolbar(
   modifier: Modifier,
@@ -43,7 +42,7 @@ fun ActionToolbar(
 ) {
   TopAppBar(
     title = { Text(stringResource(title)) },
-    colors = toolbarColor(),
+    contentColor = MaterialTheme.colors.primary,
     actions = {
       Box(modifier) {
         Row(
@@ -66,7 +65,7 @@ fun ActionToolbar(
 
 
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
 fun TopToolbar_IconTitleIcon(
   modifier: Modifier,
@@ -78,7 +77,7 @@ fun TopToolbar_IconTitleIcon(
 ) {
   TopAppBar(
     modifier = Modifier,
-    colors = toolbarColor(),
+    contentColor = MaterialTheme.colors.primary,
     title = {
       Row(
         modifier = modifier
@@ -119,17 +118,6 @@ fun preview_TopToolbar_IconTitleIcon() {
   )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun toolbarColor(darkTheme: Boolean = isSystemInDarkTheme()): TopAppBarColors {
-  val containerColor = if (darkTheme) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.primary
 
-  // Assuming you want the same color for all states for simplicity
-  return TopAppBarDefaults.topAppBarColors(
-    containerColor = containerColor,
-    scrolledContainerColor = containerColor,
-    titleContentColor = MaterialTheme.colorScheme.onPrimary,
-    actionIconContentColor = MaterialTheme.colorScheme.onPrimary,
-    navigationIconContentColor = MaterialTheme.colorScheme.onPrimary
-  )
-}
+
+

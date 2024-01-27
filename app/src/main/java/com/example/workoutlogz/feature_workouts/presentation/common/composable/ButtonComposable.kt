@@ -18,11 +18,6 @@ package com.example.workoutlogz.feature_workouts.presentation.common.composable
 
 import androidx.annotation.StringRes
 import androidx.compose.material.*
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -40,8 +35,8 @@ fun BasicButton(@StringRes text: Int, modifier: Modifier, action: () -> Unit) {
     modifier = modifier,
     colors =
       ButtonDefaults.buttonColors(
-        containerColor = MaterialTheme.colorScheme.primary,
-        contentColor = MaterialTheme.colorScheme.onPrimary
+        backgroundColor = MaterialTheme.colors.secondaryVariant,
+        contentColor = MaterialTheme.colors.onPrimary
       )
   ) {
     Text(text = stringResource(text), fontSize = 16.sp)
@@ -54,8 +49,8 @@ fun DialogConfirmButton(@StringRes text: Int, action: () -> Unit) {
     onClick = action,
     colors =
       ButtonDefaults.buttonColors(
-        containerColor = MaterialTheme.colorScheme.primary,
-        contentColor = MaterialTheme.colorScheme.onPrimary
+        backgroundColor = MaterialTheme.colors.secondaryVariant,
+        contentColor = MaterialTheme.colors.onPrimary
       )
   ) {
     Text(text = stringResource(text))
@@ -68,8 +63,8 @@ fun DialogCancelButton(@StringRes text: Int, action: () -> Unit) {
     onClick = action,
     colors =
       ButtonDefaults.buttonColors(
-        containerColor = MaterialTheme.colorScheme.onPrimary,
-        contentColor = MaterialTheme.colorScheme.primary
+        backgroundColor = MaterialTheme.colors.secondaryVariant,
+        contentColor = MaterialTheme.colors.primary
       )
   ) {
     Text(text = stringResource(text))

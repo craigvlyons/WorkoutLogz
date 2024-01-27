@@ -5,13 +5,13 @@ import android.content.res.Resources
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.rememberScaffoldState
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Snackbar
 import androidx.compose.material.SnackbarHost
-import androidx.compose.material3.Surface
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.remember
@@ -25,7 +25,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.example.makeitso.common.snackbar.SnackbarManager
 import com.example.workoutlogz.feature_workouts.presentation.common.composable.PermissionDialog
 import com.example.workoutlogz.feature_workouts.presentation.common.composable.RationaleDialog
@@ -44,7 +43,7 @@ fun WorkoutApp(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             RequestNotificationPermissionDialog()
         }
-        Surface(color = MaterialTheme.colorScheme.background) {
+        Surface(color = MaterialTheme.colors.background) {
             val appState = rememberAppState()
 
             Scaffold(
@@ -53,7 +52,7 @@ fun WorkoutApp(){
                         hostState = it,
                         modifier = Modifier.padding(8.dp),
                         snackbar = { snackbarData ->
-                            Snackbar(snackbarData, contentColor = MaterialTheme.colorScheme.onPrimary)
+                            Snackbar(snackbarData, contentColor = MaterialTheme.colors.onPrimary)
                         }
                     )
                 },
