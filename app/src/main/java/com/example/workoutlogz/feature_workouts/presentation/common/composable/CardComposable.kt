@@ -3,10 +3,7 @@ package com.example.workoutlogz.feature_workouts.presentation.common.composable
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.material3.Card
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,7 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.workoutlogz.feature_workouts.presentation.common.ext.dropdownSelector
 
-@ExperimentalMaterial3Api
+
 @Composable
 fun DangerousCardEditor(
   @StringRes title: Int,
@@ -25,10 +22,10 @@ fun DangerousCardEditor(
   modifier: Modifier,
   onEditClick: () -> Unit
 ) {
-  CardEditor(title, icon, content, onEditClick, MaterialTheme.colorScheme.primary, modifier)
+  CardEditor(title, icon, content, onEditClick, MaterialTheme.colors.primary, modifier)
 }
 
-@ExperimentalMaterial3Api
+
 @Composable
 fun RegularCardEditor(
   @StringRes title: Int,
@@ -37,10 +34,11 @@ fun RegularCardEditor(
   modifier: Modifier,
   onEditClick: () -> Unit
 ) {
-  CardEditor(title, icon, content, onEditClick, MaterialTheme.colorScheme.onSurface, modifier)
+  CardEditor(title, icon, content, onEditClick, MaterialTheme.colors.onSurface, modifier)
 }
 
-@ExperimentalMaterial3Api
+
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun CardEditor(
   @StringRes title: Int,
@@ -51,7 +49,7 @@ private fun CardEditor(
   modifier: Modifier
 ) {
   Card(
-    colors = CardDefaults.cardColors(containerColor =  MaterialTheme.colorScheme.onPrimary),
+    backgroundColor =  MaterialTheme.colors.surface,
     modifier = modifier,
     onClick = onEditClick
   ) {
@@ -70,8 +68,8 @@ private fun CardEditor(
   }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
-@ExperimentalMaterial3Api
 fun CardSelector(
   @StringRes label: Int,
   options: List<String>,
@@ -79,7 +77,7 @@ fun CardSelector(
   modifier: Modifier,
   onNewValue: (String) -> Unit
 ) {
-  Card(colors = CardDefaults.cardColors( MaterialTheme.colorScheme.onPrimary), modifier = modifier) {
+  Card(backgroundColor = MaterialTheme.colors.primaryVariant, modifier = modifier) {
     DropdownSelector(label, options, selection, Modifier.dropdownSelector(), onNewValue)
   }
 }

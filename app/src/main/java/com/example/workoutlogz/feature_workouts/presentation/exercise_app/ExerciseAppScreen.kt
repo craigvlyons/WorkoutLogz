@@ -3,8 +3,6 @@ package com.example.workoutlogz.feature_workouts.presentation.exercise_app
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -12,7 +10,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.workoutlogz.R
-import com.example.workoutlogz.feature_workouts.presentation.common.composable.ActionToolbar
 import com.example.workoutlogz.feature_workouts.presentation.common.composable.TopToolbar_IconTitleIcon
 
 

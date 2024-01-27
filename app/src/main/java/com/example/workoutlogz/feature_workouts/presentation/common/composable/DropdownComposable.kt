@@ -1,18 +1,13 @@
 package com.example.workoutlogz.feature_workouts.presentation.common.composable
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material3.*
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 
 @Composable
-@ExperimentalMaterial3Api
+@ExperimentalMaterialApi
 fun DropdownContextMenu(
   options: List<String>,
   modifier: Modifier,
@@ -22,7 +17,7 @@ fun DropdownContextMenu(
 }
 
 @Composable
-@ExperimentalMaterial3Api
+@ExperimentalMaterialApi
 fun DropdownSelector(
   @StringRes label: Int,
   options: List<String>,
@@ -34,15 +29,14 @@ fun DropdownSelector(
 }
 
 @Composable
-@ExperimentalMaterial3Api
+@ExperimentalMaterialApi
 private fun dropdownColors(): TextFieldColors {
   return ExposedDropdownMenuDefaults.textFieldColors(
-    focusedContainerColor = MaterialTheme.colorScheme.onPrimary,
+    backgroundColor = MaterialTheme.colors.secondary,
     focusedIndicatorColor = Color.Transparent,
     unfocusedIndicatorColor = Color.Transparent,
-    unfocusedTrailingIconColor = MaterialTheme.colorScheme.onSurface,
-    focusedTrailingIconColor = MaterialTheme.colorScheme.onSurface,
-    focusedLabelColor = MaterialTheme.colorScheme.primary,
-    unfocusedLabelColor = MaterialTheme.colorScheme.primary
+    focusedTrailingIconColor = MaterialTheme.colors.onSurface,
+    focusedLabelColor = MaterialTheme.colors.secondaryVariant,
+    unfocusedLabelColor = MaterialTheme.colors.onPrimary
   )
 }

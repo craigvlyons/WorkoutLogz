@@ -17,7 +17,7 @@
             android:name=".feature_workouts.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.WorkoutLogz">
+            android:theme="@android:style/ThemeOverlay.Material.Dark">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

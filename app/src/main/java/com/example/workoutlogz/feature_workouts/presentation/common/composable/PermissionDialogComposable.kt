@@ -1,9 +1,9 @@
 package com.example.workoutlogz.feature_workouts.presentation.common.composable
 
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
+import androidx.compose.material.AlertDialog
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -14,8 +14,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import com.example.workoutlogz.feature_workouts.presentation.common.ext.alertDialog
 import com.example.workoutlogz.feature_workouts.presentation.common.ext.textButton
+import com.example.workoutlogz.ui.theme.LightBackground
 
-import com.example.workoutlogz.ui.theme.Purple80
 import com.example.workoutlogz.R.string as AppText
 
 @Composable
@@ -35,7 +35,7 @@ fun PermissionDialog(onRequestPermission: () -> Unit) {
                     },
                     modifier = Modifier.textButton(),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Purple80,
+                        backgroundColor = LightBackground,
                         contentColor = Color.White
                     )
                 ) { Text(text = stringResource(AppText.request_notification_permission)) }
@@ -59,7 +59,7 @@ fun RationaleDialog() {
                     onClick = { showWarningDialog = false },
                     modifier = Modifier.textButton(),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Purple80,
+                        backgroundColor = LightBackground,
                         contentColor = Color.White
                     )
                 ) { Text(text = stringResource(AppText.ok)) }
