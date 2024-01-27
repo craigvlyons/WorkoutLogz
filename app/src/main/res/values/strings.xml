@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Workout Logz</string>
+    <string name="ExerciseTitle">Exercise Tracker</string>
+    <string name="SettingsTitle">Settings</string>
+    <string name="ok">OK</string>
+    <string name="request_notification_permission">Request permission</string>
+    <string name="notification_permission_title">Notification permission</string>
+    <string name="notification_permission_description">The notification permission is important for this app. Please grant the permission.</string>
+    <string name="notification_permission_settings">The notification permission is important for this app. Please navigate to your device settings and enable notifications for Make it So.</string>
+    <string name="generic_error">Something wrong happened. Please try again.</string>
+    <string name="try_again">Try again</string>
+
+</resources>
