@@ -11,4 +11,6 @@ interface ExerciseRepository {
 
     suspend fun insertAllExercises(exercises: List<Exercise>)
 
+    suspend fun DeleteById(exerciseId: Int)
+
 }

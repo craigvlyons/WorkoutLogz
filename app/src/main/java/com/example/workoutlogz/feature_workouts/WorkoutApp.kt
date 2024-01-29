@@ -26,9 +26,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.makeitso.common.snackbar.SnackbarManager
+import com.example.workoutlogz.feature_workouts.presentation.add_workout_names.AddExerciseNamesScreen
 import com.example.workoutlogz.feature_workouts.presentation.common.composable.PermissionDialog
 import com.example.workoutlogz.feature_workouts.presentation.common.composable.RationaleDialog
 import com.example.workoutlogz.feature_workouts.presentation.exercise_app.ExerciseAppScreen
+import com.example.workoutlogz.feature_workouts.presentation.new_exerciseList_screen.NewExerciseListScreen
 import com.example.workoutlogz.feature_workouts.presentation.settings_screen.SettingScreen
 import com.example.workoutlogz.feature_workouts.presentation.splashScreen.SplashScreen
 import com.example.workoutlogz.ui.theme.WorkoutLogzTheme
@@ -118,15 +120,17 @@ fun NavGraphBuilder.WorkoutGraph(appState: WorkoutAppState){
 //            openScreen = { route -> appState.navigate(route) }
         )
     }
-//
-//    composable(STATS_SCREEN) {
-//        StatsScreen()
-//    }
-//
-//    composable(LOGIN_SCREEN) {
-//        LoginScreen(openAndPopUp = { route, popUp -> appState.navigateAndPopUp(route, popUp) })
-//    }
-//
+
+    composable(ADD_EXERCISE_NAME_SCREEN) {
+        AddExerciseNamesScreen(
+            openAndPopUp = { route, popUp -> appState.navigateAndPopUp(route, popUp)}
+        )
+    }
+
+    composable(NEW_EXERCISE_LIST_SCREEN) {
+        NewExerciseListScreen(openAndPopUp = { route, popUp -> appState.navigateAndPopUp(route, popUp) })
+    }
+
 //    composable(SIGN_UP_SCREEN) {
 //        SignUpScreen(openAndPopUp = { route, popUp -> appState.navigateAndPopUp(route, popUp) })
 //    }

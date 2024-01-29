@@ -6,6 +6,6 @@ import androidx.room.PrimaryKey
 @Entity
 data class ExerciseList(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val name: String? = null,
+    val name: String = "",
     val description : String = "",
 )

@@ -36,15 +36,15 @@ val DividerColor = Color(0xFF616161)
 
 private val LightColorScheme = lightColors(
     primary= DarkBackground  ,
-    primaryVariant  = LightBackground,
+    primaryVariant = LightBackground,
     secondary = DividerColor,
     secondaryVariant = LightGreen,
- background = DarkerBackground,
- surface = LightBackground,
- onPrimary = White,
- onSecondary = White,
- onBackground = White,
- onSurface = White,
+    background = DarkerBackground,
+    surface = LightBackground,
+    onPrimary = White,
+    onSecondary = White,
+    onBackground = White,
+    onSurface = White,
 )
 
 @Composable

@@ -18,4 +18,8 @@ class ExerciseRepositoryImpl(private val dao: ExerciseDao): ExerciseRepository {
         dao.insertAll(exercises)
     }
 
+    override suspend fun DeleteById(exerciseId: Int) {
+        dao.DeleteById(exerciseId)
+    }
+
 }
