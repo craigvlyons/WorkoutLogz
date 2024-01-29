@@ -21,6 +21,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 
@@ -77,7 +78,7 @@ fun TopToolbar_IconTitleIcon(
 ) {
   TopAppBar(
     modifier = Modifier,
-    contentColor = MaterialTheme.colors.primary,
+    contentColor = MaterialTheme.colors.onPrimary,
     title = {
       Row(
         modifier = modifier

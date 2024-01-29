@@ -12,7 +12,6 @@ import androidx.room.PrimaryKey
 data class Workout(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val exerciseListId: Int,
-    val workoutId: String = "",
     val name: String = "",
     val set: Int = 0,
     val rep: Int = 0,
