@@ -3,10 +3,15 @@ package com.example.workoutlogz.feature_workouts.presentation.new_exerciseList_s
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
@@ -21,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusState
+import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
@@ -63,6 +69,7 @@ fun NewExerciseListContent(
     desValueChange : (String) -> Unit,
     desFocusChange : (FocusState) -> Unit ,
     addExerciseList: () -> Unit,
+    onImeAction: () -> Unit = {}
     ){
     val keyboardController = LocalSoftwareKeyboardController.current
     Scaffold(
@@ -71,23 +78,33 @@ fun NewExerciseListContent(
             modifier = Modifier,
             title = R.string.AddExerciseListTitle,
             primaryActionIcon = R.drawable.ic_menu,
-            primaryAction = { onBack() }
+            primaryAction = { onBack() },
+
             )
                  },
 
     content = {
     Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // Title
         Text(
-            text = "Create New Exercise List",
+            text = "New List",
             style = TextStyle(fontSize = 20.sp),
             modifier = Modifier.padding(bottom = 16.dp)
         )
-
+       Spacer(modifier = Modifier.height(16.dp))
+        // name label
+        Text(
+            text = "NAME",
+            style = MaterialTheme.typography.caption,
+            modifier = Modifier
+                .padding(start = 15.dp , bottom = 5.dp)
+                .align(Alignment.Start)
+        )
         //  Name Input
         TransparentHintField(
             text = titleTextField.text,
@@ -97,7 +114,16 @@ fun NewExerciseListContent(
             textStyle = MaterialTheme.typography.subtitle1,
             onFocusChange = onFocusChange
         )
+        Spacer(modifier = Modifier.height(25.dp))
 
+        // label description
+        Text(
+            text = "DESCRIPTION",
+            style = MaterialTheme.typography.caption,
+            modifier = Modifier
+                .padding(start = 15.dp , bottom = 5.dp)
+                .align(Alignment.Start)
+        )
         // Description Input
         TransparentHintField(
             text = descriptionTextField.text,

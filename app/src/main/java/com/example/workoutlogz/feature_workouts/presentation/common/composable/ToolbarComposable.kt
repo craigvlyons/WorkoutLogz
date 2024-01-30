@@ -43,7 +43,7 @@ fun ActionToolbar(
 ) {
   TopAppBar(
     title = { Text(stringResource(title)) },
-    contentColor = MaterialTheme.colors.primary,
+    contentColor = MaterialTheme.colors.background,
     actions = {
       Box(modifier) {
         Row(
@@ -79,6 +79,7 @@ fun TopToolbar_IconTitleIcon(
   TopAppBar(
     modifier = Modifier,
     contentColor = MaterialTheme.colors.onPrimary,
+    backgroundColor = MaterialTheme.colors.background,
     title = {
       Row(
         modifier = modifier

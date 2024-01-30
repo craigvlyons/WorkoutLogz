@@ -73,6 +73,14 @@ private fun addExerciseList(){
         try {
             Log.i(TAG, "saving exercise ${exerciseList.name}")
             exerciseListUseCase.addExerciseListUseCase(exerciseList)
+            _titleTextField.value = _titleTextField.value.copy(
+                text = "",
+                isHintVisible = true
+            )
+            _descriptionTextField.value = _descriptionTextField.value.copy(
+                text = "",
+                isHintVisible = true
+            )
         }catch (ex: Exception){
             Log.i(TAG,"Failed to save exercise List")
             Log.e(TAG, ex.toString())
