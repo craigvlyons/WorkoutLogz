@@ -3,9 +3,13 @@ package com.example.workoutlogz.feature_workouts.presentation.exercise_app
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -27,6 +31,8 @@ import com.example.workoutlogz.feature_workouts.data.models.ExerciseList
 import com.example.workoutlogz.feature_workouts.presentation.common.composable.ClickableRowIconExerciseArrow
 import com.example.workoutlogz.feature_workouts.presentation.common.composable.ClickableRowIconTitle
 import com.example.workoutlogz.feature_workouts.presentation.common.composable.ClickableRowWithIconAndArrow
+import com.example.workoutlogz.feature_workouts.presentation.common.composable.SwipeableRow
+import com.example.workoutlogz.feature_workouts.presentation.common.composable.SwipeableStringRowDelete
 import com.example.workoutlogz.feature_workouts.presentation.common.composable.SwipeableTextBox
 import com.example.workoutlogz.feature_workouts.presentation.common.composable.TopToolbar_IconTitleIcon
 import com.example.workoutlogz.ui.theme.Shapes
@@ -85,13 +91,11 @@ fun ExerciseScreenContent(
                 exerciseList,
                 openScreen
             )
-            ExerciseNameList(
-                title = "Exercises",
-                exerciseNameList = exerciseNamesList ,
-                deleteId = (deleteId)
-            )
-            ExerciseListSection()
-            StartSessionButton()
+//            ExerciseNameList(
+//                title = "Exercises",
+//                exerciseNameList = exerciseNamesList ,
+//                deleteId = (deleteId)
+//            )
         }
     }
 }
@@ -103,6 +107,7 @@ fun SummarySection() {
             .fillMaxWidth()
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
+
 
     ) {
         Text("Summary", style = MaterialTheme.typography.h6)
@@ -133,6 +138,9 @@ fun ExerciseNameList(
         text = title,
         style = MaterialTheme.typography.h1
         )
+        // SwipeableStringRowDelete works
+        // SwipeableStringRowDelete(itemText = "string row delete") {  }
+        // SwipeableRow()
     Divider(color = MaterialTheme.colors.secondary, thickness = 1.dp)
     LazyColumn() {
             items (items = exerciseNameList,
@@ -140,7 +148,7 @@ fun ExerciseNameList(
                     exercise.id
                 }
                 ) { ex ->
-                SwipeableTextBox(item = "${ex.name} , ${ex.id}", onDismiss = { deleteId(ex.id)  })
+                SwipeableTextBox(item = ex.name, onDismiss = { deleteId(ex.id)  })
             }
     }
     }
@@ -150,38 +158,39 @@ fun ExerciseListMainPage(
     exerciseLists : List<ExerciseList>,
     openScreen: (String) -> Unit
 ) {
-        Text(
-            text = "Exercise Lists",
-            style = MaterialTheme.typography.h1,
-            modifier = Modifier.padding(16.dp),
+    Text(
+        text = "Exercise Lists",
+        style = MaterialTheme.typography.h1,
+        modifier = Modifier.padding(16.dp),
 
         )
-    Column(modifier = Modifier
-        .fillMaxWidth()
-        .clip(Shapes.large)
-        .background(MaterialTheme.colors.primary)
-        .padding(6.dp)
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(Shapes.large)
+            .background(MaterialTheme.colors.primary)
+            .padding(6.dp)
     ) {
 
         ClickableRowIconTitle(
             iconResourceId = R.drawable.ic_menu,
             title = "New List...",
-            onClick = { openScreen(NEW_EXERCISE_LIST_SCREEN)},
+            onClick = { openScreen(NEW_EXERCISE_LIST_SCREEN) },
             textStyle = MaterialTheme.typography.subtitle1
         )
         ClickableRowWithIconAndArrow(
             iconResourceId = R.drawable.ic_menu,
             title = "My Exercises",
             total = "18",
-            onClick = {  }
+            onClick = { }
         )
-        LazyColumn( ){
+        LazyColumn() {
             items(
                 items = exerciseLists,
-                key = {exerciseList ->
+                key = { exerciseList ->
                     exerciseList.id
                 }
-                ){exerciseList ->
+            ) { exerciseList ->
                 ClickableRowIconExerciseArrow(
                     iconResourceId = R.drawable.ic_menu,
                     exercise = exerciseList,
@@ -198,132 +207,133 @@ fun ExerciseListMainPage(
 //            onClick = { },
 //            textStyle = MaterialTheme.typography.subtitle1
 //        )
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-                .clickable { /* TODO: Handle New List click */ }
-        ) {
-            Icon(
-                imageVector = Icons.Default.Add,
-                contentDescription = "Add List",
-                tint = MaterialTheme.colors.secondaryVariant,
-                modifier = Modifier
-                    .size(24.dp)
-            )
-               
-            Text(
-                text = "New List...",
-                style = MaterialTheme.typography.body1,
-                modifier = Modifier.padding(start = 8.dp)
-            )
-        }
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-                .clickable { /* TODO: Handle My Exercises click */ }
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_menu),
-                contentDescription = "My Exercises",
-                modifier = Modifier.size(24.dp),
-                tint = MaterialTheme.colors.secondaryVariant
-            )
-            
-            Text(
-                text = "My Exercises - total >",
-                style = MaterialTheme.typography.body1,
-                modifier = Modifier.padding(start = 8.dp)
-            )
-        }
-
-        LazyColumn(modifier = Modifier.padding(16.dp)) {
-            /* TODO: Add exercise lists here */
-        }
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-                .clickable { /* TODO: Handle title click */ }
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_menu),
-                contentDescription = "Title",
-                modifier = Modifier.size(24.dp),
-                tint = MaterialTheme.colors.secondaryVariant
-            )
-            Column(modifier = Modifier.padding(start = 8.dp)) {
-                Text(
-                    text = "Title",
-                    style = MaterialTheme.typography.body1
-                )
-                Text(
-                    text = "Description",
-                    style = MaterialTheme.typography.caption,
-                    color = Color.Gray
-                )
-            }
-            Text(
-                text = "total >",
-                style = MaterialTheme.typography.body1,
-                modifier = Modifier.padding(start = 8.dp)
-            )
-        }
+//        Row(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(16.dp)
+//                .clickable { /* TODO: Handle New List click */ }
+//        ) {
+//            Icon(
+//                imageVector = Icons.Default.Add,
+//                contentDescription = "Add List",
+//                tint = MaterialTheme.colors.secondaryVariant,
+//                modifier = Modifier
+//                    .size(24.dp)
+//            )
+//
+//            Text(
+//                text = "New List...",
+//                style = MaterialTheme.typography.body1,
+//                modifier = Modifier.padding(start = 8.dp)
+//            )
+//        }
+//
+//        Row(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(16.dp)
+//                .clickable { /* TODO: Handle My Exercises click */ }
+//        ) {
+//            Icon(
+//                painter = painterResource(id = R.drawable.ic_menu),
+//                contentDescription = "My Exercises",
+//                modifier = Modifier.size(24.dp),
+//                tint = MaterialTheme.colors.secondaryVariant
+//            )
+//
+//            Text(
+//                text = "My Exercises - total >",
+//                style = MaterialTheme.typography.body1,
+//                modifier = Modifier.padding(start = 8.dp)
+//            )
+//        }
+//
+//        LazyColumn(modifier = Modifier.padding(16.dp)) {
+//            /* TODO: Add exercise lists here */
+//        }
+//
+//        Row(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(16.dp)
+//                .clickable { /* TODO: Handle title click */ }
+//        ) {
+//            Icon(
+//                painter = painterResource(id = R.drawable.ic_menu),
+//                contentDescription = "Title",
+//                modifier = Modifier.size(24.dp),
+//                tint = MaterialTheme.colors.secondaryVariant
+//            )
+//            Column(modifier = Modifier.padding(start = 8.dp)) {
+//                Text(
+//                    text = "Title",
+//                    style = MaterialTheme.typography.body1
+//                )
+//                Text(
+//                    text = "Description",
+//                    style = MaterialTheme.typography.caption,
+//                    color = Color.Gray
+//                )
+//            }
+//            Text(
+//                text = "total >",
+//                style = MaterialTheme.typography.body1,
+//                modifier = Modifier.padding(start = 8.dp)
+//            )
+//        }
+//    }
     }
 }
 
 
-
-@Composable
-fun SummaryItem(title: String, count: Int) {
-    /* TODO set up summery on home page.
+    @Composable
+    fun SummaryItem(title: String, count: Int) {
+        /* TODO set up summery on home page.
         layout date in grey
         Summery title in white, text "SUMMERY"
-        2 rows and 2 columns , with sets, reps, exercises, and total workout time.
+        2 rows and 2 columns , with sets, reps, exercises, and volume.
      */
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(text = count.toString(), style = MaterialTheme.typography.h5)
-        Text(text = title, style = MaterialTheme.typography.subtitle1)
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(text = count.toString(), style = MaterialTheme.typography.h5)
+            Text(text = title, style = MaterialTheme.typography.subtitle1)
+        }
     }
-}
-
-@Composable
-fun ExerciseListSection() {
-    // You can use a LazyColumn for scrolling if you have many items
-    Column {
-        ExerciseListItem("Day 1", "Full body workouts for day 1.")
-        ExerciseListItem("Day 2", "Workouts for day 2")
-        ExerciseListItem("Day 3", "Workouts for day 3")
-        // Add more items or use a loop to generate items
-    }
-}
-
-@Composable
-fun ExerciseListItem(day: String, description: String) {
-    Column(modifier = Modifier
-        .fillMaxWidth()
-        .padding(16.dp)) {
-        Text(day, style = MaterialTheme.typography.h6)
-        Text(description, style = MaterialTheme.typography.body1)
-        Divider(color = Color.Gray, thickness = 1.dp)
-    }
-}
 
 
-@Composable
-fun StartSessionButton() {
-    Button(
-        onClick = { /* TODO: Handle click */ },
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = Color.Green)
-    ) {
-        Text("New Session", color = Color.White)
-    }
-}
+//@Composable
+//fun ExerciseListSection() {
+//    // You can use a LazyColumn for scrolling if you have many items
+//    Column {
+//        ExerciseListItem("Day 1", "Full body workouts for day 1.")
+//        ExerciseListItem("Day 2", "Workouts for day 2")
+//        ExerciseListItem("Day 3", "Workouts for day 3")
+//        // Add more items or use a loop to generate items
+//    }
+//}
+
+//@Composable
+//fun ExerciseListItem(day: String, description: String) {
+//    Column(modifier = Modifier
+//        .fillMaxWidth()
+//        .padding(16.dp)) {
+//        Text(day, style = MaterialTheme.typography.h6)
+//        Text(description, style = MaterialTheme.typography.body1)
+//        Divider(color = Color.Gray, thickness = 1.dp)
+//    }
+//}
+
+
+//@Composable
+//fun StartSessionButton() {
+//    Button(
+//        onClick = { /* TODO: Handle click */ },
+//        modifier = Modifier
+//            .fillMaxWidth()
+//            .padding(16.dp),
+//        colors = ButtonDefaults.buttonColors(backgroundColor = Color.Green)
+//    ) {
+//        Text("New Session", color = Color.White)
+//    }
+//}
 
 
