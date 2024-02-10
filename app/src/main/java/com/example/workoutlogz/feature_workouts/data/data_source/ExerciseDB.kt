@@ -6,7 +6,7 @@ import com.example.workoutlogz.feature_workouts.data.models.Exercise
 import com.example.workoutlogz.feature_workouts.data.models.ExerciseList
 import com.example.workoutlogz.feature_workouts.data.models.Workout
 
-@Database(entities = [ExerciseList::class, Workout::class, Exercise::class], version = 3)
+@Database(entities = [ExerciseList::class, Workout::class, Exercise::class], version = 4)
 abstract class ExerciseDB: RoomDatabase() {
     abstract val exerciseDao: ExerciseDao
 

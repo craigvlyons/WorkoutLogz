@@ -10,23 +10,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusState
-import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
@@ -39,7 +31,7 @@ import com.example.workoutlogz.feature_workouts.presentation.common.composable.T
 @Composable
     fun NewExerciseListScreen(
         openAndPopUp: (String, String) -> Unit,
-        viewModel: ExerciseListViewModel = hiltViewModel()
+        viewModel: AddExerciseListViewModel = hiltViewModel()
         ){
     val titleTextField = viewModel.title.value
     val descriptionTextField = viewModel.description.value
@@ -48,11 +40,11 @@ import com.example.workoutlogz.feature_workouts.presentation.common.composable.T
         titleTextField = titleTextField,
         descriptionTextField = descriptionTextField,
         openAndPopUp = openAndPopUp,
-        titleValueChange = {newValue -> viewModel.onEvent(ExerciseListEvent.EnteredTitle(newValue))  },
-        onFocusChange = {newFocusState -> viewModel.onEvent(ExerciseListEvent.ChangeTitleFocus(newFocusState))   },
-        desValueChange = {newValue -> viewModel.onEvent(ExerciseListEvent.EnteredDescription(newValue)) },
-        desFocusChange = {newFocusState -> viewModel.onEvent(ExerciseListEvent.ChangeDescriptionFocus(newFocusState)) },
-        addExerciseList = { viewModel.onEvent(ExerciseListEvent.AddExerciseList)},
+        titleValueChange = {newValue -> viewModel.onEvent(AddExerciseListEvent.EnteredTitle(newValue))  },
+        onFocusChange = {newFocusState -> viewModel.onEvent(AddExerciseListEvent.ChangeTitleFocus(newFocusState))   },
+        desValueChange = {newValue -> viewModel.onEvent(AddExerciseListEvent.EnteredDescription(newValue)) },
+        desFocusChange = {newFocusState -> viewModel.onEvent(AddExerciseListEvent.ChangeDescriptionFocus(newFocusState)) },
+        addExerciseList = { viewModel.onEvent(AddExerciseListEvent.AddAddExerciseList)},
     )
     }
 

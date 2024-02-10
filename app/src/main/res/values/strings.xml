@@ -3,6 +3,7 @@
     <string name="ExerciseTitle">Exercise Tracker</string>
     <string name="AddExerciseListTitle">Add Exercise List</string>
     <string name="AddExerciseTitle">Add Exercise</string>
+    <string name="ExerciseListTitle">Exercise List</string>
     <string name="SettingsTitle">Settings</string>
     <string name="ok">OK</string>
     <string name="request_notification_permission">Request permission</string>

@@ -72,7 +72,7 @@ fun AddExerciseNamesScreenContent(
             TopToolbar_IconTitleIcon(
                 modifier = Modifier,
                 primaryActionIcon = R.drawable.ic_menu,
-                title = R.string.SettingsTitle,
+                title = R.string.AddExerciseTitle,
                 primaryAction = { onBack() },
                 secondaryActionIcon = null,
                 secondaryAction = { /* Handle secondary action here */ }
