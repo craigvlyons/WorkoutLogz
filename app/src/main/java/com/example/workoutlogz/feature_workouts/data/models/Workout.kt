@@ -7,8 +7,7 @@ import androidx.room.PrimaryKey
 
 @Entity(foreignKeys = [ForeignKey(entity = ExerciseList::class,
     parentColumns = arrayOf("id"),
-    childColumns = arrayOf("exerciseListId"),
-    onDelete = ForeignKey.CASCADE)])
+    childColumns = arrayOf("exerciseListId"))])
 data class Workout(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val exerciseListId: Int,
@@ -18,5 +17,4 @@ data class Workout(
     val weight: Double = 0.0,
     val rest: String? = null,
     val date: String = ""
-
 )

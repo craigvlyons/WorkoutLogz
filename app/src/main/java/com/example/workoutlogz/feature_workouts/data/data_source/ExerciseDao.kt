@@ -7,6 +7,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
+import androidx.room.Update
 import com.example.workoutlogz.feature_workouts.data.models.Exercise
 import com.example.workoutlogz.feature_workouts.data.models.ExerciseList
 import com.example.workoutlogz.feature_workouts.data.models.ExerciseListWithWorkouts
@@ -18,7 +19,6 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ExerciseDao {
     // Exercise Table
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(exercises: List<Exercise>)
 
@@ -43,9 +43,6 @@ interface ExerciseDao {
 
 
     // Exercise List Table
-    @Transaction
-    @Query("SELECT * FROM ExerciseList WHERE id = :exerciseListId")
-    fun getExerciseListWithWorkouts(exerciseListId: Int): List<ExerciseListWithWorkouts>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertExerciseList(exerciseList: ExerciseList)
@@ -53,6 +50,21 @@ interface ExerciseDao {
     @Query("SELECT * FROM exerciselist")
     fun getAllExerciseLists(): Flow<List<ExerciseList>>
 
+    @Query("SELECT * FROM ExerciseList WHERE ID = :exerciseListId")
+    fun getExerciseListById(exerciseListId: Int): ExerciseList
+
+    // Get ExerciseList with Workouts by ExerciseList ID
+    @Transaction
+    @Query("SELECT * FROM ExerciseList WHERE id = :exerciseListId")
+    fun getExerciseListWithWorkouts(exerciseListId: Int): Flow<ExerciseListWithWorkouts>
+
+    // Update an ExerciseList
+    @Update
+    suspend fun updateExerciseList(exerciseList: ExerciseList)
+
+    // Delete an ExerciseList by ID (Workouts will be automatically deleted due to the CASCADE rule)
+    @Query("DELETE FROM ExerciseList WHERE id = :exerciseListId")
+    suspend fun deleteExerciseList(exerciseListId: Int)
 
 
 }

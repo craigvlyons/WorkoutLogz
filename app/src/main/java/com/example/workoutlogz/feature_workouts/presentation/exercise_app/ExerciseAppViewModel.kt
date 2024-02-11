@@ -4,19 +4,22 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.workoutlogz.feature_workouts.ADD_EXERCISE_NAME_SCREEN
 import com.example.workoutlogz.feature_workouts.SETTINGS_SCREEN
-import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.WorkoutUseCases
+import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.ExerciseUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import android.util.Log
+import com.example.workoutlogz.feature_workouts.EXERCISELIST_ID
+import com.example.workoutlogz.feature_workouts.EXERCISELIST_ID_ARG
+import com.example.workoutlogz.feature_workouts.EXERCISE_LIST_SCREEN
 import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.exerciseList.ExerciseListUseCases
 
 
 @HiltViewModel
 class ExerciseAppViewModel @Inject constructor(
-    private val workoutUseCases: WorkoutUseCases,
+    private val exerciseUseCases: ExerciseUseCases,
     private val exerciseListUseCases: ExerciseListUseCases
 ) : ViewModel() {
     private val _state = MutableStateFlow(ExerciseAppState())
@@ -44,6 +47,10 @@ class ExerciseAppViewModel @Inject constructor(
                 Log.d(TAG, event.exerciseId.toString())
                 deleteExerciseById(event.exerciseId)
             }
+            is ExerciseEvent.ExerciseListId -> {
+                // onExerciseListClick(event.exerciseId)
+                // openScreen("$EXERCISELIST_ID?$EXERCISELIST_ID={${event.exerciseId}}")
+            }
         }
     }
 
@@ -51,7 +58,7 @@ class ExerciseAppViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 if (exerciseId != null){
-                    workoutUseCases.deleteExerciseByIdUseCase(exerciseId)
+                    exerciseUseCases.deleteExerciseByIdUseCase(exerciseId)
                     getExercises()
                 }
             }catch (ex: Exception){
@@ -62,7 +69,7 @@ class ExerciseAppViewModel @Inject constructor(
 
     private fun getExercises() {
         viewModelScope.launch {
-            workoutUseCases.getAllExerciseUseCase.invoke().collect { exercises ->
+            exerciseUseCases.getAllExerciseUseCase.invoke().collect { exercises ->
                 _state.value = _state.value.copy(
                 exercises = exercises
                 )
@@ -84,6 +91,12 @@ class ExerciseAppViewModel @Inject constructor(
     fun onSettingsClick(openScreen: (String) -> Unit) = openScreen(SETTINGS_SCREEN)
 
     fun onExerciseClick(openScreen: (String) -> Unit) = openScreen(ADD_EXERCISE_NAME_SCREEN)
+
+    fun onExerciseListClick(openScreen: (String) -> Unit, exerciseListId: Int) {
+         // openScreen("$EXERCISE_LIST_SCREEN?$EXERCISELIST_ID={${exerciseListId}}")
+        //  openScreen(EXERCISE_LIST_SCREEN +"?$EXERCISELIST_ID={${exerciseListId}}")
+        openScreen("$EXERCISE_LIST_SCREEN/$exerciseListId")
+    }
 
     companion object {
         private const val TAG = "ExerciseAppViewModel"

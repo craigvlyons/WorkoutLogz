@@ -9,16 +9,13 @@ import com.example.workoutlogz.feature_workouts.EXERCISE_APP_SCREEN
 import com.example.workoutlogz.feature_workouts.NEW_EXERCISE_LIST_SCREEN
 import com.example.workoutlogz.feature_workouts.SPLASH_SCREEN
 import com.example.workoutlogz.feature_workouts.data.models.ExerciseList
-import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.WorkoutUseCases
-import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.exerciseList.AddExerciseListUseCase
 import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.exerciseList.ExerciseListUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ExerciseListViewModel @Inject constructor(
+class AddExerciseListViewModel @Inject constructor(
     private val exerciseListUseCase: ExerciseListUseCases
 ): ViewModel() {
     private val _titleTextField = mutableStateOf(BasicTextFieldState(
@@ -31,29 +28,29 @@ class ExerciseListViewModel @Inject constructor(
     val title: State<BasicTextFieldState> = _titleTextField
     val description: State<BasicTextFieldState> = _descriptionTextField
 
-    fun onEvent(event: ExerciseListEvent){
+    fun onEvent(event: AddExerciseListEvent){
         when(event){
-            is ExerciseListEvent.EnteredTitle -> {
+            is AddExerciseListEvent.EnteredTitle -> {
                 _titleTextField.value = _titleTextField.value.copy(
                     text = event.value
                 )
             }
-            is ExerciseListEvent.EnteredDescription -> {
+            is AddExerciseListEvent.EnteredDescription -> {
                 _descriptionTextField.value = _descriptionTextField.value.copy(
                     text = event.value
                 )
             }
-            is ExerciseListEvent.ChangeTitleFocus -> {
+            is AddExerciseListEvent.ChangeTitleFocus -> {
                 _titleTextField.value = _titleTextField.value.copy(
                     isHintVisible = !event.focusState.isFocused && _titleTextField.value.text.isBlank()
                 )
             }
-            is ExerciseListEvent.ChangeDescriptionFocus -> {
+            is AddExerciseListEvent.ChangeDescriptionFocus -> {
                 _descriptionTextField.value = _descriptionTextField.value.copy(
                     isHintVisible = !event.focusState.isFocused && _descriptionTextField.value.text.isBlank()
                 )
             }
-            is ExerciseListEvent.AddExerciseList -> {
+            is AddExerciseListEvent.AddAddExerciseList -> {
                 addExerciseList()
             }
             else -> {}

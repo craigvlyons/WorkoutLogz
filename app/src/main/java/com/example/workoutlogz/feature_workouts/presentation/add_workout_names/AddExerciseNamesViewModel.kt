@@ -9,10 +9,9 @@ import com.example.workoutlogz.feature_workouts.EXERCISE_APP_SCREEN
 import com.example.workoutlogz.feature_workouts.SETTINGS_SCREEN
 import com.example.workoutlogz.feature_workouts.SPLASH_SCREEN
 import com.example.workoutlogz.feature_workouts.data.models.Exercise
-import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.WorkoutUseCases
+import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.ExerciseUseCases
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import android.util.Log
@@ -21,7 +20,7 @@ import com.example.workoutlogz.BuildConfig
 
 @HiltViewModel
 class AddExerciseNamesViewModel @Inject constructor(
-    private val workoutUseCases: WorkoutUseCases
+    private val exerciseUseCases: ExerciseUseCases
 ): ViewModel() {
     private val _state = MutableStateFlow(AddExerciseNamesState())
     val state: StateFlow<AddExerciseNamesState> = _state
@@ -73,7 +72,7 @@ class AddExerciseNamesViewModel @Inject constructor(
     private fun deleteExerciesById(exerciseId: Int) {
             viewModelScope.launch {
                 try {
-                    workoutUseCases.deleteExerciseByIdUseCase(exerciseId)
+                    exerciseUseCases.deleteExerciseByIdUseCase(exerciseId)
                     Log.d(TAG, exerciseId.toString())
                 }catch (ex: Exception){
 
@@ -91,7 +90,7 @@ class AddExerciseNamesViewModel @Inject constructor(
             try {
                 val newExercise = Exercise(name = exerciseName)
                 //TODO add check that workout exists before saving
-                workoutUseCases.addNewExerciseUseCase.invoke(newExercise)
+                exerciseUseCases.addNewExerciseUseCase.invoke(newExercise)
                 getExerciseNames()
                 // Optionally, update state to show success message
                 if (BuildConfig.DEBUG) {
@@ -121,7 +120,7 @@ class AddExerciseNamesViewModel @Inject constructor(
 
     private fun getExerciseNames(){
         viewModelScope.launch {
-        workoutUseCases.getAllExerciseUseCase().collect{ exerciseList ->
+        exerciseUseCases.getAllExerciseUseCase().collect{ exerciseList ->
             _state.value = _state.value.copy(
                 exerciseList = exerciseList
             )

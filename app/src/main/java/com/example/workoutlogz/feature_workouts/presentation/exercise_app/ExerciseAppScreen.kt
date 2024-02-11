@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.workoutlogz.R
+import com.example.workoutlogz.feature_workouts.EXERCISE_LIST_SCREEN
 import com.example.workoutlogz.feature_workouts.NEW_EXERCISE_LIST_SCREEN
 import com.example.workoutlogz.feature_workouts.data.models.Exercise
 import com.example.workoutlogz.feature_workouts.data.models.ExerciseList
@@ -54,7 +55,8 @@ fun ExerciseAppScreen(
         openScreen = openScreen,
         exerciseNamesList = exerciseNamesList,
         exerciseList = exerciseList,
-        deleteId = { id -> viewModel.onEvent(ExerciseEvent.DeleteById(id)) }
+        deleteId = { id -> viewModel.onEvent(ExerciseEvent.DeleteById(id)) },
+        onExerciseListClick = {openScreen, id ->  viewModel.onExerciseListClick(openScreen, id) }
     )
 }
 
@@ -68,6 +70,7 @@ fun ExerciseScreenContent(
     exerciseNamesList: List<Exercise>,
     exerciseList: List<ExerciseList>,
     deleteId : (Int) -> Unit,
+    onExerciseListClick: ((String) -> Unit, Int) -> Unit
 ){
     Scaffold(
         topBar = {
@@ -89,7 +92,9 @@ fun ExerciseScreenContent(
             SummarySection()
             ExerciseListMainPage(
                 exerciseList,
-                openScreen
+                openScreen,
+                onExerciseClick,
+                onExerciseListClick
             )
 //            ExerciseNameList(
 //                title = "Exercises",
@@ -156,7 +161,9 @@ fun ExerciseNameList(
 @Composable
 fun ExerciseListMainPage(
     exerciseLists : List<ExerciseList>,
-    openScreen: (String) -> Unit
+    openScreen: (String) -> Unit,
+    onExerciseClick:((String) -> Unit) -> Unit,
+    onExerciseListClick: ((String) -> Unit , Int) -> Unit
 ) {
     Text(
         text = "Exercise Lists",
@@ -182,7 +189,7 @@ fun ExerciseListMainPage(
             iconResourceId = R.drawable.ic_menu,
             title = "My Exercises",
             total = "18",
-            onClick = { }
+            onClick = { onExerciseClick(openScreen) }
         )
         LazyColumn() {
             items(
@@ -194,7 +201,7 @@ fun ExerciseListMainPage(
                 ClickableRowIconExerciseArrow(
                     iconResourceId = R.drawable.ic_menu,
                     exercise = exerciseList,
-                    onClick = { /*TODO*/ },
+                    onClick = {  onExerciseListClick(openScreen, exerciseList.id) },
                     textStyle = MaterialTheme.typography.subtitle1
                 )
             }
