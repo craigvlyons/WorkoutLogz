@@ -8,11 +8,9 @@ import com.example.workoutlogz.feature_workouts.data.data_source.ExerciseDB
 import com.example.workoutlogz.feature_workouts.data.data_source.ExerciseDao
 import com.example.workoutlogz.feature_workouts.data.models.Exercise
 import com.example.workoutlogz.feature_workouts.data.repository.ExerciseListRepositoryImpl
-import com.example.workoutlogz.feature_workouts.data.repository.ExerciseListWithWorkoutsRepoImpl
 import com.example.workoutlogz.feature_workouts.data.repository.ExerciseRepositoryImpl
 import com.example.workoutlogz.feature_workouts.data.repository.WorkoutRepositoryImpl
 import com.example.workoutlogz.feature_workouts.domain.repository.ExerciseListRepository
-import com.example.workoutlogz.feature_workouts.domain.repository.ExerciseListWithWorkoutsRepos
 import com.example.workoutlogz.feature_workouts.domain.repository.ExerciseRepository
 import com.example.workoutlogz.feature_workouts.domain.repository.WorkoutRepository
 import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.AddNewExerciseUseCase
@@ -85,13 +83,6 @@ object ExerciseModule {
         return ExerciseListRepositoryImpl(db.exerciseDao)
     }
 
-    @Provides
-    @Singleton
-    fun providesExerciseListWithWorkoutsRepository(db: ExerciseDB): ExerciseListWithWorkoutsRepos{
-        return ExerciseListWithWorkoutsRepoImpl(db.exerciseDao)
-    }
-
-
     // UseCases
     @Provides
     @Singleton
@@ -110,11 +101,6 @@ object ExerciseModule {
             getAllExerciseListUseCase = GetAllExerciseListUseCase(repository),
             addExerciseListUseCase = AddExerciseListUseCase(repository)
         )
-    }
-    @Provides
-    @Singleton
-    fun providesExerciseListWithWorkoutsUseCase(repos: ExerciseListWithWorkoutsRepos): GetExerciseListWithWorkouts{
-        return GetExerciseListWithWorkouts(repos)
     }
 
 

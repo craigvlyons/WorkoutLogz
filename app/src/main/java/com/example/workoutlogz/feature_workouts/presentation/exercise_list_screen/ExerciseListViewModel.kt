@@ -41,28 +41,26 @@ class ExerciseListViewModel @Inject constructor(
     init {
         val exerciseListId: Int = savedStateHandle.get(EXERCISELIST_ID) ?: -1
 
-        //TODO get exercise list by Id
-        // Get workouts with exercise list Id
+        //TODO
+        // get all workout names
         // list all workout names, as radio buttons
+        // add new workout with ExerciseListId
 
         Log.i(TAG, "exercise id: $exerciseListId")
 
          if (exerciseListId != -1)  {
             viewModelScope.launch {
                 try {
-                    getExerciseListWithWorkouts.invoke(exerciseListId).collect { exerciseListWithWorkouts ->
-                        // Update the whole state at once
-                        _state.value =
-                            _state.value.copy(exerciseListWithWorkouts = exerciseListWithWorkouts)
+                    getExerciseListWithWorkouts.invoke(exerciseListId)?.collect { exerciseListWithWorkouts ->
+                        _state.value = _state.value.copy(exerciseListWithWorkouts = exerciseListWithWorkouts)
+                        Log.i(TAG, "Exercise List name: ${_state.value.exerciseListWithWorkouts?.exerciseList?.name}")
                     }
                 } catch (e: Exception) {
                     Log.e(TAG, "Error fetching ExerciseListWithWorkouts", e)
                     // Handle error, maybe update the state with an error message
                 }
 
-                // _state.value.exerciseList = null
-
-                Log.i(TAG, "${_state.value.exerciseList?.name}")
+                Log.i(TAG, "Exercise List name: ${_state.value.exerciseList?.name}")
             }
         }
 }
