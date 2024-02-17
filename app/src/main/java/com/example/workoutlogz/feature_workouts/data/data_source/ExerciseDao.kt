@@ -23,6 +23,9 @@ interface ExerciseDao {
     @Query("SELECT * FROM exercises")
     fun getAllExercises(): Flow<List<Exercise>>
 
+    @Query("SELECT * FROM exercises WHERE name= :exerciseName")
+    fun getExerciseByName(exerciseName: String): Exercise
+
     @Query("DELETE FROM Exercises WHERE id = :exerciseId")
     suspend fun DeleteById(exerciseId: Int)
 
