@@ -31,6 +31,9 @@ interface ExerciseDao {
     @Query("DELETE FROM Exercises WHERE id = :exerciseId")
     suspend fun DeleteById(exerciseId: Int)
 
+    @Query("SELECT COUNT(*) > 0 FROM Exercises WHERE name = :exerciseName")
+    suspend fun isExercisesExists(exerciseName: String): Boolean
+
 
 
     // Workout table
