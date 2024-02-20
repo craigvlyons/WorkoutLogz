@@ -22,4 +22,12 @@ class ExerciseRepositoryImpl(private val dao: ExerciseDao): ExerciseRepository {
         dao.DeleteById(exerciseId)
     }
 
+    override suspend fun isExerciseExists(exerciseName: String): Boolean {
+        return dao.isExercisesExists(exerciseName)
+    }
+
+    override suspend fun getExerciseByName(exerciseName: String): Exercise {
+        return dao.getExerciseByName(exerciseName)
+    }
+
 }

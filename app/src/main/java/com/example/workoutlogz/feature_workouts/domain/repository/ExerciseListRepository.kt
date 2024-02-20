@@ -7,9 +7,11 @@ import kotlinx.coroutines.flow.Flow
 
 interface ExerciseListRepository {
     suspend fun getAllExerciseLists(): Flow<List<ExerciseList>>
-    suspend fun insertExerciseList(exercise: ExerciseList)
+    suspend fun insertExerciseList(exerciseList: ExerciseList)
     suspend fun deleteById(exerciseListId: Int)
     suspend fun getAllWorkouts(): Flow<List<Workout>>
     suspend fun getExerciseListById(exerciseListId: Int): Flow<ExerciseList>
     suspend fun getAllWorkoutsInExerciseList(exerciseListId: Int): Flow<List<Workout>>
+    suspend fun upDateExerciseListExerciseNames(exerciseListId: Int, exerciseNames: List<String>)
+    suspend fun upDateExerciseList(exerciseList: ExerciseList)
 }

@@ -52,7 +52,7 @@ fun SplashScreenContent(
         if (shouldShowError) {
             Text(text = stringResource(AppText.generic_error))
 
-            BasicButton(AppText.try_again, Modifier.basicButton()) { onAppStart() }
+            BasicButton("Try Again", Modifier.basicButton()) { onAppStart() }
         } else {
             CircularProgressIndicator(color = MaterialTheme.colors.onBackground)
         }

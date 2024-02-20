@@ -62,6 +62,9 @@ interface ExerciseDao {
     @Update
     suspend fun updateExerciseList(exerciseList: ExerciseList)
 
+    @Query("UPDATE ExerciseList SET exerciseNames = :exerciseNames WHERE id = :exerciseListId")
+    suspend fun updateExerciseListExerciseNames(exerciseListId: Int, exerciseNames: List<String>)
+
     // Delete an ExerciseList by ID (Workouts will be automatically deleted due to the CASCADE rule)
     @Query("DELETE FROM ExerciseList WHERE id = :exerciseListId")
     suspend fun deleteExerciseList(exerciseListId: Int)

@@ -2,5 +2,8 @@ package com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.ex
 
 data class ExerciseListUseCases(
     val getAllExerciseListUseCase: GetAllExerciseListUseCase,
-    val addExerciseListUseCase: AddExerciseListUseCase
+    val addExerciseListUseCase: AddExerciseListUseCase,
+    val getExerciseListByIdUseCase: GetExerciseListByIdUseCase,
+    val updateExerciseListNamesUseCase: UpdateExerciseListNamesUseCase,
+    val updateExerciseListUseCase: UpdateExerciseListUseCase
 )

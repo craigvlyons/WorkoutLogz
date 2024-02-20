@@ -17,11 +17,16 @@ import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.Add
 import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.DeleteExerciseByIdUseCase
 import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.ExerciseUseCases
 import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.GetAllExerciseUseCase
+import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.GetExerciseByNameUseCase
+import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.IsExerciseExistsUseCase
 
 import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.exerciseList.AddExerciseListUseCase
 import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.exerciseList.ExerciseListUseCases
 import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.exerciseList.GetAllExerciseListUseCase
+import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.exerciseList.GetExerciseListByIdUseCase
 import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.exerciseList.GetExerciseListWithWorkouts
+import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.exerciseList.UpdateExerciseListNamesUseCase
+import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.exerciseList.UpdateExerciseListUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -45,24 +50,14 @@ object ExerciseModule {
             .fallbackToDestructiveMigration()
         .build()
     }
-    private fun prepopulateDatabase(exerciseDao: ExerciseDao) {
-        CoroutineScope(Dispatchers.IO).launch {
-            val exercises = listOf(
-                Exercise(name = "Push-ups"),
-                Exercise(name = "Squats"),
-                // ... add all other exercises ...
-            )
-            exerciseDao.insertAll(exercises)
-        }
-    }
 
-    private val roomCallback = object : RoomDatabase.Callback() {
-        override fun onCreate(db: SupportSQLiteDatabase) {
-            super.onCreate(db)
-            val exerciseDao = provideExerciseDatabase(Application()).exerciseDao
-            prepopulateDatabase(exerciseDao)
-        }
-    }
+//    private val roomCallback = object : RoomDatabase.Callback() {
+//        override fun onCreate(db: SupportSQLiteDatabase) {
+//            super.onCreate(db)
+//            val exerciseDao = provideExerciseDatabase(Application()).exerciseDao
+//            prepopulateDatabase(exerciseDao)
+//        }
+//    }
 
     // Repositories
     @Provides
@@ -90,7 +85,9 @@ object ExerciseModule {
         return ExerciseUseCases(
             getAllExerciseUseCase = GetAllExerciseUseCase(repository),
             addNewExerciseUseCase = AddNewExerciseUseCase(repository),
-            deleteExerciseByIdUseCase = DeleteExerciseByIdUseCase(repository)
+            deleteExerciseByIdUseCase = DeleteExerciseByIdUseCase(repository),
+            getExerciseByNameUseCase = GetExerciseByNameUseCase(repository),
+            isExerciseExistsUseCase = IsExerciseExistsUseCase(repository)
         )
     }
 
@@ -99,7 +96,10 @@ object ExerciseModule {
     fun provideExerciseListUseCases(repository: ExerciseListRepository) : ExerciseListUseCases{
         return ExerciseListUseCases(
             getAllExerciseListUseCase = GetAllExerciseListUseCase(repository),
-            addExerciseListUseCase = AddExerciseListUseCase(repository)
+            addExerciseListUseCase = AddExerciseListUseCase(repository),
+            getExerciseListByIdUseCase = GetExerciseListByIdUseCase(repository),
+            updateExerciseListNamesUseCase = UpdateExerciseListNamesUseCase(repository),
+            updateExerciseListUseCase = UpdateExerciseListUseCase(repository)
         )
     }
 

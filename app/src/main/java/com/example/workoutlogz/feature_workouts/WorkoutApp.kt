@@ -171,7 +171,7 @@ fun NavGraphBuilder.WorkoutGraph(appState: WorkoutAppState){
         if (exerciseListId != null) {
             ExerciseListScreen(
                 exerciseListId = exerciseListId,
-                popUpScreen = { appState.popUp() }
+                openAndPopUp = {route, popUp -> appState.navigateAndPopUp(route, popUp) }
             )
         }
     }

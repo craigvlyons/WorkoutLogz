@@ -64,7 +64,8 @@ private fun addExerciseList(){
     }
     val exerciseList = ExerciseList(
         name = _titleTextField.value.text,
-        description = _descriptionTextField.value.text
+        description = _descriptionTextField.value.text,
+        exerciseNames = emptyList()  // listOf("Exercise 1", "Exercise 2", "Exercise 3")
     )
     viewModelScope.launch {
         try {
