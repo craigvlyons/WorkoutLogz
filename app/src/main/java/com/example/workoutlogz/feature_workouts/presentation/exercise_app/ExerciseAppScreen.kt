@@ -109,22 +109,33 @@ fun ExerciseScreenContent(
 fun SummarySection() {
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-
-
+            .fillMaxWidth(),
     ) {
-        Text("Summary", style = MaterialTheme.typography.h6)
-        Divider(color = Color.Gray, thickness = 1.dp)
-        Row(modifier = Modifier.padding(top = 8.dp)) {
+        Text("Summary", style = MaterialTheme.typography.h1)
+        //Divider(color = Color.Gray, thickness = 1.dp)
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 8.dp)
+            .clip(Shapes.large)
+            .background(MaterialTheme.colors.primary),
+            //horizontalArrangement = Arrangement.SpaceAround
+            ) {
+            Column {
             SummaryItem("Sets", 29)
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier)
             SummaryItem("Repetitions", 237)
+            }
+
+            Column {
+                    SummaryItem("Exercises", 9)
+                    Spacer(modifier = Modifier)
+                    SummaryItem("Volume", 4789)
+                }
+            // TODO: button to go to summery screen
+            }
         }
-        // Add more summary items if needed
     }
-}
+
 
 @Composable
 fun ExerciseNameList(
@@ -300,9 +311,11 @@ fun ExerciseListMainPage(
         Summery title in white, text "SUMMERY"
         2 rows and 2 columns , with sets, reps, exercises, and volume.
      */
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(text = count.toString(), style = MaterialTheme.typography.h5)
+        Column(
+            modifier = Modifier.padding(6.dp)
+        ) {
             Text(text = title, style = MaterialTheme.typography.subtitle1)
+            Text(text = count.toString(), style = MaterialTheme.typography.h5)
         }
     }
 

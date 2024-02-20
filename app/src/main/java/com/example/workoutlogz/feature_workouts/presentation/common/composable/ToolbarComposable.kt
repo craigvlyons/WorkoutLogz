@@ -63,10 +63,6 @@ fun ActionToolbar(
   )
 }
 
-
-
-
-
 @Composable
 fun TopToolbar_IconTitleIcon(
   modifier: Modifier,
@@ -95,6 +91,46 @@ fun TopToolbar_IconTitleIcon(
         Spacer(Modifier.weight(1f))
         // Title in the Middle
         Text(text = stringResource(title))
+        Spacer(modifier.weight(1f))
+        // Right Button
+        if (secondaryAction != null && secondaryActionIcon != null){
+          IconButton(onClick = secondaryAction) {
+            Icon(painter = painterResource(id = secondaryActionIcon), contentDescription = "Right Button")
+          }
+        }
+      }
+    }
+  )
+}
+
+@Composable
+fun TopToolbar_DynamicTitle(
+  modifier: Modifier,
+  title: String,
+  @DrawableRes primaryActionIcon: Int,
+  primaryAction: () -> Unit,
+  @DrawableRes secondaryActionIcon: Int? = null,
+  secondaryAction: (() -> Unit)? = null
+) {
+  TopAppBar(
+    modifier = Modifier,
+    contentColor = MaterialTheme.colors.onPrimary,
+    backgroundColor = MaterialTheme.colors.background,
+    title = {
+      Row(
+        modifier = modifier
+          .padding(start = 0.dp, end = 16.dp)
+          .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+      ) {
+        // Left Button
+        IconButton(onClick = primaryAction) {
+          Icon(painter = painterResource(id = primaryActionIcon), contentDescription = "Back")
+        }
+        Spacer(Modifier.weight(1f))
+        // Title in the Middle
+        Text(text = title)
         Spacer(modifier.weight(1f))
         // Right Button
         if (secondaryAction != null && secondaryActionIcon != null){

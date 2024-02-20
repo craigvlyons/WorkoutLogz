@@ -6,80 +6,140 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.key.Key
-import androidx.compose.ui.input.key.KeyEventType
-import androidx.compose.ui.input.key.key
-import androidx.compose.ui.input.key.onKeyEvent
-import androidx.compose.ui.input.key.type
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.workoutlogz.R
-import com.example.workoutlogz.feature_workouts.data.models.ExerciseList
-import com.example.workoutlogz.feature_workouts.presentation.common.composable.TopToolbar_IconTitleIcon
-import com.example.workoutlogz.feature_workouts.presentation.common.composable.TransparentHintField
-import com.example.workoutlogz.feature_workouts.presentation.exercise_app.ExerciseNameList
-import dagger.hilt.android.lifecycle.HiltViewModel
+import com.example.workoutlogz.feature_workouts.presentation.add_exercises_to_exerciseList_screen.AddExercisesToExerciseListScreen
+import com.example.workoutlogz.feature_workouts.presentation.common.composable.BasicButton
+import com.example.workoutlogz.feature_workouts.presentation.common.composable.ClickableRowWithIconAndArrow
+import com.example.workoutlogz.feature_workouts.presentation.common.composable.TopToolbar_DynamicTitle
+import kotlinx.coroutines.launch
 
 
 @Composable
 fun ExerciseListScreen(
-    popUpScreen: () -> Unit,
+    openAndPopUp: (String, String) -> Unit,
     exerciseListId: Int = -1,
     viewModel: ExerciseListViewModel = hiltViewModel()
-){
+) {
     val state by viewModel.state.collectAsStateWithLifecycle()
-
+    val title by viewModel.title
+    val allExerciseNames by viewModel.allExerciseNames
+    val selectedExercises by viewModel.selectedExercises
     ExerciseListContent(
-        state
-
+        onBack = { viewModel.navBack(openAndPopUp) },
+        state,
+        title,
+        allExerciseNames,
+        selectedExercises,
+        onExerciseSelected = { name ->
+            viewModel.onEvent(
+                ExerciseListEvent.ToggleExerciseSelection(
+                    name
+                )
+            )
+        }
     )
 }
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
-@OptIn(ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterialApi::class)
 @Composable
 fun ExerciseListContent(
-    state: ExerciseListState
-
-){
-
+    onBack: () -> Unit,
+    state: ExerciseListState,
+    title: String,
+    allExerciseNames: List<String>,
+    selectedExercises: Set<String>,
+    onExerciseSelected: (String) -> Unit,
+) {
     val keyboardController = LocalSoftwareKeyboardController.current
-    Scaffold(
-        topBar = {
-            TopToolbar_IconTitleIcon(
-                modifier = Modifier,
-                primaryActionIcon = R.drawable.ic_menu,
-                title = R.string.ExerciseListTitle,
-                primaryAction = { /* */ },
-                secondaryActionIcon = null,
-                secondaryAction = { /* Handle secondary action here */ }
+    val coroutineScope = rememberCoroutineScope() // We need to remember the coroutine scope
+    val sheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
+
+
+    // Main content
+    ModalBottomSheetLayout(
+        sheetState = sheetState,
+        sheetContent = {
+            AddExercisesToExerciseListScreen(
+                exercises = allExerciseNames, //viewModel.exerciseNames, // Assuming this is a list in your ViewModel
+                selectedExercises = selectedExercises, // viewModel.selectedExercises, // Assuming this is a set in your ViewModel
+                onSearchQueryChanged = { }, // viewModel::onSearchQueryChanged, // Example function in your ViewModel
+                onExerciseSelected = onExerciseSelected, // viewModel::onExerciseSelected, // Example function in your ViewModel
+                onSearch = { } // viewModel::onSearch // Example function in your ViewModel
             )
-        },
-        backgroundColor = MaterialTheme.colors.background,
-        content = {
-
-            Column {
-
-
-
-                Spacer(modifier = Modifier
-                    .fillMaxWidth()
-                    .size(1.dp))
-
-                state.exerciseList?.let { it1 -> Text(text = it1.name) }
-
-            }
         }
-    )
+    ) {
+        Scaffold(
+            topBar = {
+                TopToolbar_DynamicTitle(
+                    modifier = Modifier,
+                    primaryActionIcon = R.drawable.ic_menu,
+                    title = title,
+                    primaryAction = { onBack() },
+                    secondaryActionIcon = null,
+                    secondaryAction = { /* Handle secondary action here */ }
+                )
+            },
+            backgroundColor = MaterialTheme.colors.background,
+            content = {
+                Column {
+                    Text(text = "Workout Description")
+
+                    Spacer(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .size(1.dp)
+                    )
+
+                    // Lazy Column
+                    LazyColumn {
+                        items(
+                            items = state.exerciseNamesList,
+                            key = { it }
+                        ) {
+                            ClickableRowWithIconAndArrow(
+                                iconResourceId = R.drawable.ic_menu,
+                                title = it,
+                                onClick = { /*TODO*/ },
+                                total = "Yesterday"
+                            )
+                        }
+                    }
+                    Spacer(Modifier.weight(1f)) // Pushes the button to the bottom
+
+                    Button(
+                        onClick = {
+                            coroutineScope.launch {
+                                if (sheetState.isVisible) {
+                                    sheetState.hide()
+                                } else {
+                                    sheetState.show()
+                                }
+                            }
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)
+                    ) {
+                        Text("Add Exercises")
+                    }
+                }
+            }
+        )
+    }
 }
 
