@@ -1,6 +1,8 @@
 package com.example.workoutlogz.feature_workouts.presentation.add_workout_names
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,6 +15,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusState
@@ -31,6 +34,7 @@ import com.example.workoutlogz.feature_workouts.presentation.common.composable.T
 import com.example.workoutlogz.feature_workouts.presentation.common.composable.TransparentHintField
 import com.example.workoutlogz.feature_workouts.presentation.exercise_app.ExerciseNameList
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.workoutlogz.feature_workouts.presentation.common.composable.ActionConfirmButton
 import java.time.format.TextStyle
 
 
@@ -71,7 +75,7 @@ fun AddExerciseNamesScreenContent(
         topBar = {
             TopToolbar_IconTitleIcon(
                 modifier = Modifier,
-                primaryActionIcon = R.drawable.ic_menu,
+                primaryActionIcon = R.drawable.left,
                 title = R.string.AddExerciseTitle,
                 primaryAction = { onBack() },
                 secondaryActionIcon = null,
@@ -81,37 +85,48 @@ fun AddExerciseNamesScreenContent(
         backgroundColor = MaterialTheme.colors.background,
         content = {
 
-            Column {
+            Column(
+                modifier = Modifier.padding(12.dp)
+            ) {
                 TransparentHintField(
                     text = nameTextField.text,
                     hint = nameTextField.hint,
                     onValueChange = onValueChange,
                     onFocusChange =  onFocusChange,
                     isHintVisible = nameTextField.isHintVisible,
-                    textStyle = MaterialTheme.typography.subtitle1,
+                    textStyle = MaterialTheme.typography.h3,
                     modifier = Modifier
-                        .padding(10.dp)
+                        .padding(bottom = 8.dp)
                         .onKeyEvent { keyEvent ->
-                    if (keyEvent.key == Key.Enter && keyEvent.type == KeyEventType.KeyUp){
-                        saveExercise()
-                        keyboardController?.hide()
-                        true
-                    }else false
-                }
+                            if (keyEvent.key == Key.Enter && keyEvent.type == KeyEventType.KeyUp) {
+                                saveExercise()
+                                keyboardController?.hide()
+                                true
+                            } else false
+                        }
                 )
-
-                Button(onClick = { saveExercise() }) {
-                    Text("Add Exercise")
+                Box(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentAlignment = Alignment.BottomEnd,
+                ) {
+                    ActionConfirmButton(
+                        text = "Add Exercise",
+                        action = {
+                            saveExercise()
+                            keyboardController?.hide()
+                                 },
+                        enable = nameTextField.text.isNotBlank())
                 }
                 Spacer(modifier = Modifier
                     .fillMaxWidth()
-                    .size(1.dp))
+                    .size(16.dp))
 
                 ExerciseNameList(
                     title = "Exercises",
                     exerciseNameList = state.exerciseList,
                     deleteId = (deleteId)
                     )
+
             }
         }
     )

@@ -145,20 +145,15 @@ fun ExerciseNameList(
     ){
     Column(modifier = Modifier
         .fillMaxWidth()
+    ) {
+    Text(modifier = Modifier.padding(6.dp).padding(start = 12.dp),
+        text = title,
+        style = MaterialTheme.typography.h2
+        )
+    LazyColumn(modifier = Modifier
         .clip(Shapes.large)
         .background(MaterialTheme.colors.primary)
-        .padding(10.dp)
-
     ) {
-    Text(modifier = Modifier.padding(6.dp),
-        text = title,
-        style = MaterialTheme.typography.h1
-        )
-        // SwipeableStringRowDelete works
-        // SwipeableStringRowDelete(itemText = "string row delete") {  }
-        // SwipeableRow()
-    Divider(color = MaterialTheme.colors.secondary, thickness = 1.dp)
-    LazyColumn() {
             items (items = exerciseNameList,
                 key = { exercise ->
                     exercise.id

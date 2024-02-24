@@ -25,6 +25,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.workoutlogz.R
 import com.example.workoutlogz.feature_workouts.presentation.add_exercises_to_exerciseList_screen.AddExercisesToExerciseListScreen
 import com.example.workoutlogz.feature_workouts.presentation.common.composable.ActionIconTextButton
+import com.example.workoutlogz.feature_workouts.presentation.common.composable.ClickableRowTitleDateArrow
 import com.example.workoutlogz.feature_workouts.presentation.common.composable.ClickableRowWithIconAndArrow
 import com.example.workoutlogz.feature_workouts.presentation.common.composable.TopToolbar_DynamicTitle
 import com.example.workoutlogz.ui.theme.Shapes
@@ -121,11 +122,10 @@ fun ExerciseListContent(
                             items = state.exerciseNamesList,
                             key = { it }
                         ) {
-                            ClickableRowWithIconAndArrow(
-                                iconResourceId = R.drawable.ic_menu,
+                            ClickableRowTitleDateArrow(
                                 title = it,
                                 onClick = { /*TODO*/ },
-                                total = "Yesterday"
+                                lastWorkout = "Yesterday"
                             )
                         }
                     }

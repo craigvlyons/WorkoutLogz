@@ -72,6 +72,45 @@ fun ClickableRowWithIconAndArrow(
 }
 
 @Composable
+fun ClickableRowTitleDateArrow(
+    title: String, // Text to display
+    onClick: () -> Unit, // Click action
+    lastWorkout: String
+) {
+    Row(
+        modifier = Modifier
+            .clickable(onClick = onClick)
+            .padding(8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = title,
+            style = MaterialTheme.typography.body1,
+            modifier = Modifier.padding(start = 16.dp),
+            fontSize = 18.sp
+        )
+
+        Spacer(Modifier.weight(1f))
+
+        Text(
+            text = lastWorkout,
+            style = MaterialTheme.typography.caption,
+            modifier = Modifier.padding(start = 10.dp),
+            fontSize = 18.sp)
+
+        // Arrow icon on the right
+        Icon(
+            imageVector = Icons.Filled.KeyboardArrowRight,
+            contentDescription = "Go", // Accessibility description
+            modifier = Modifier
+                .size(30.dp),
+            //.padding(start = 8.dp),
+            tint = MaterialTheme.colors.secondary // Set the color of the arrow icon
+        )
+    }
+}
+
+@Composable
 fun ClickableRowIconTitle(
     iconResourceId: Int, // Resource ID for the leading icon
     title: String, // Text to display

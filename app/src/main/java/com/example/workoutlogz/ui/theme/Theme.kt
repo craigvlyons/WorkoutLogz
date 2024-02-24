@@ -11,7 +11,7 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColors(
-    primary= DarkBackground  ,
+    primary= DeepSpaceGrey  ,
     primaryVariant  = LightBackground, // buttons
     secondary = DividerColor,
     secondaryVariant = LightGreen, // buttons
@@ -35,12 +35,12 @@ val DividerColor = Color(0xFF616161)
  */
 
 private val LightColorScheme = lightColors(
-    primary= DarkBackground  ,
-    primaryVariant = LightBackground,
+    primary= NightGrey  , //NightGrey
+    primaryVariant = DarkBackground,// LightBackground,
     secondary = DividerColor,
     secondaryVariant = LightGreen,
     background = DarkerBackground,
-    surface = LightBackground,
+    surface = DeepSpaceGrey,
     onPrimary = White,
     onSecondary = White,
     onBackground = White,
@@ -58,7 +58,7 @@ fun WorkoutLogzTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            window.statusBarColor = colors.primary.toArgb()
+            window.statusBarColor = colors.background.toArgb()
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
         }
     }
