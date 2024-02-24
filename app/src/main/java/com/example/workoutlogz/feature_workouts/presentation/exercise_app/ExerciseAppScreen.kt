@@ -76,7 +76,7 @@ fun ExerciseScreenContent(
         topBar = {
             TopToolbar_IconTitleIcon(
                 modifier = Modifier,
-                primaryActionIcon = R.drawable.ic_menu,
+                primaryActionIcon = R.drawable.settings,
                 title = R.string.ExerciseTitle,
                 primaryAction = {  onSettingsClick(openScreen)},
                 secondaryActionIcon = R.drawable.ic_menu,
@@ -145,20 +145,15 @@ fun ExerciseNameList(
     ){
     Column(modifier = Modifier
         .fillMaxWidth()
+    ) {
+    Text(modifier = Modifier.padding(6.dp).padding(start = 12.dp),
+        text = title,
+        style = MaterialTheme.typography.h2
+        )
+    LazyColumn(modifier = Modifier
         .clip(Shapes.large)
         .background(MaterialTheme.colors.primary)
-        .padding(10.dp)
-
     ) {
-    Text(modifier = Modifier.padding(6.dp),
-        text = title,
-        style = MaterialTheme.typography.h1
-        )
-        // SwipeableStringRowDelete works
-        // SwipeableStringRowDelete(itemText = "string row delete") {  }
-        // SwipeableRow()
-    Divider(color = MaterialTheme.colors.secondary, thickness = 1.dp)
-    LazyColumn() {
             items (items = exerciseNameList,
                 key = { exercise ->
                     exercise.id
@@ -191,13 +186,13 @@ fun ExerciseListMainPage(
     ) {
 
         ClickableRowIconTitle(
-            iconResourceId = R.drawable.ic_menu,
+            iconResourceId = R.drawable.clipboard,
             title = "New List...",
             onClick = { openScreen(NEW_EXERCISE_LIST_SCREEN) },
             textStyle = MaterialTheme.typography.subtitle1
         )
         ClickableRowWithIconAndArrow(
-            iconResourceId = R.drawable.ic_menu,
+            iconResourceId = R.drawable.dumbbell_solid,
             title = "My Exercises",
             total = "18",
             onClick = { onExerciseClick(openScreen) }
@@ -210,7 +205,7 @@ fun ExerciseListMainPage(
                 }
             ) { exerciseList ->
                 ClickableRowIconExerciseArrow(
-                    iconResourceId = R.drawable.ic_menu,
+                    iconResourceId = R.drawable.clipboard,
                     exercise = exerciseList,
                     onClick = {  onExerciseListClick(openScreen, exerciseList.id) },
                     textStyle = MaterialTheme.typography.subtitle1

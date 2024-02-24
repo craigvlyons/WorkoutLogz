@@ -2,6 +2,7 @@ package com.example.workoutlogz.feature_workouts.presentation.common.composable
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,6 +25,7 @@ import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -46,6 +48,51 @@ fun TransparentHintField(
     ) {
         Row(
             modifier = Modifier
+                .height(48.dp)
+                .padding(start = 5.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            BasicTextField(
+                value = text,
+                onValueChange = onValueChange,
+                singleLine = singleLine,
+                textStyle = textStyle,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp)
+                    .onFocusChanged { onFocusChange(it) },
+            )
+        }
+        if (isHintVisible) {
+            Text(
+                modifier = Modifier
+                    .padding(start = 8.dp)
+                    .align(Alignment.CenterStart),
+                text = hint,
+                style = TextStyle(fontSize = 20.sp),
+                color = MaterialTheme.colors.secondary,
+            )
+        }
+    }
+}
+
+@Composable
+fun SearchHintField(
+    text: String,
+    hint: String,
+    isHintVisible: Boolean = true,
+    onValueChange: (String) -> Unit,
+    textStyle: TextStyle,
+    singleLine: Boolean = false,
+    onFocusChange: (FocusState) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier
+            .border(0.5.dp, Color.DarkGray, RoundedCornerShape(size = 16.dp))
+    ) {
+        Row(
+            modifier = Modifier
                 .padding(start = 5.dp)
                 .height(35.dp),
             verticalAlignment = Alignment.CenterVertically
@@ -61,12 +108,6 @@ fun TransparentHintField(
                 onValueChange = onValueChange,
                 singleLine = singleLine,
                 textStyle = textStyle,
-//                colors = TextFieldDefaults.textFieldColors(
-//                    cursorColor = MaterialTheme.colors.onPrimary,
-//                    focusedIndicatorColor = Color.Transparent, // Hide the bottom indicator line when focused
-//                     unfocusedIndicatorColor  = Color.Transparent, // Hide the bottom indicator line when unfocused
-//                    backgroundColor= Color.Transparent // Set background to transparent
-            //),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp)
@@ -84,6 +125,24 @@ fun TransparentHintField(
             )
         }
     }
+}
 
-
+@Preview
+@Composable
+fun previewTextFields() {
+    Column {
+        TransparentHintField(
+            text = "text area",
+            hint = "type something...",
+            onValueChange = {},
+            textStyle = MaterialTheme.typography.h1,
+            onFocusChange = {})
+        Spacer(modifier = Modifier.height(16.dp))
+        SearchHintField(
+            text = "text area",
+            hint = "type something...",
+            onValueChange = {},
+            textStyle = MaterialTheme.typography.h1,
+            onFocusChange = {})
+    }
 }

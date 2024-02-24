@@ -18,3 +18,9 @@ val DarkerBackground = Color(0xFF121212) // Or any color you want for the backgr
 val DarkBackground = Color(0xFF2C2C2C) // Background for items
 val LightBackground = Color(0xFF3C3C3C) // Background for buttons
 val DividerColor = Color(0xFF616161)
+
+val AlmostBlack = Color(0xFF1A1A1A) // Very dark grey, almost black
+val CharcoalGrey = Color(0xFF1E1E1E) // Dark grey with a hint of warmth
+val NightGrey = Color(0xFF222222) // Dark grey reminiscent of a night sky
+val DeepSpaceGrey = Color(0xFF252525) // Grey that suggests the deep expanse of space
+val ShadowGrey = Color(0xFF292929) // Grey similar to the shadows cast by moonlight

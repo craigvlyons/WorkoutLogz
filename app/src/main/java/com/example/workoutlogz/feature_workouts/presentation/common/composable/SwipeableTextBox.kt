@@ -46,7 +46,7 @@ fun SwipeableTextBox(item: String, onDismiss: (String) -> Unit) {
         directions = setOf(DismissDirection.StartToEnd, DismissDirection.EndToStart),
         //modifier = Modifier.background(MaterialTheme.colors.primary) ,
         background = {
-                     /* Background content if needed, like a delete icon */
+            /* Background content if needed, like a delete icon */
             val direction = dismissState.dismissDirection ?: return@SwipeToDismiss
             val alignment = when (direction) {
                 DismissDirection.StartToEnd -> Alignment.CenterStart
@@ -77,6 +77,7 @@ fun SwipeableTextBox(item: String, onDismiss: (String) -> Unit) {
                     modifier = Modifier
                         .background(MaterialTheme.colors.primary)
                         .padding(6.dp)
+                        .padding(start = 16.dp)
 
                 ) // Your text here
             }

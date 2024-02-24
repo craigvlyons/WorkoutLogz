@@ -21,7 +21,7 @@ import com.example.workoutlogz.BuildConfig
 @HiltViewModel
 class AddExerciseNamesViewModel @Inject constructor(
     private val exerciseUseCases: ExerciseUseCases
-): ViewModel() {
+) : ViewModel() {
     private val _state = MutableStateFlow(AddExerciseNamesState())
     val state: StateFlow<AddExerciseNamesState> = _state
 
@@ -32,16 +32,14 @@ class AddExerciseNamesViewModel @Inject constructor(
     )
     var nameTextField: State<AddExerciseTextFieldState> = _nameTextField
 
-    //TODO exercise list
-
     init {
         getExerciseNames()
     }
 
-    fun onEvent(event: AddNewExerciseName){
-        when(event){
+    fun onEvent(event: AddNewExerciseName) {
+        when (event) {
             is AddNewExerciseName.EnteredSearch -> {
-                _nameTextField.value =  _nameTextField.value.copy(
+                _nameTextField.value = _nameTextField.value.copy(
                     text = event.value
                 )
             }
@@ -52,7 +50,6 @@ class AddExerciseNamesViewModel @Inject constructor(
             }
             is AddNewExerciseName.SaveExercise -> {
                 // save exercise to database...
-
             }
             is AddNewExerciseName.AddExercise -> {
                 saveExercise()
@@ -64,24 +61,23 @@ class AddExerciseNamesViewModel @Inject constructor(
             is AddNewExerciseName.DeleteExerciseById -> {
                 deleteExerciesById(event.exerciseId)
             }
-
             else -> {}
         }
     }
 
     private fun deleteExerciesById(exerciseId: Int) {
-            viewModelScope.launch {
-                try {
-                    exerciseUseCases.deleteExerciseByIdUseCase(exerciseId)
-                    Log.d(TAG, exerciseId.toString())
-                }catch (ex: Exception){
-
-                }
+        viewModelScope.launch {
+            try {
+                exerciseUseCases.deleteExerciseByIdUseCase(exerciseId)
+                Log.d(TAG, exerciseId.toString())
+            } catch (ex: Exception) {
+                // this is empty
             }
+        }
     }
 
-    private fun saveExercise(){
-        val exerciseName = _nameTextField.value.text
+    private fun saveExercise() {
+        val exerciseName = _nameTextField.value.text.trim()
         if (exerciseName.isBlank()) {
             // Handle empty input, e.g., update state to show an error message
             return
@@ -100,41 +96,22 @@ class AddExerciseNamesViewModel @Inject constructor(
                 // Log error and update state to reflect failure
             }
         }
-//        viewModelScope.launch {
-//            try {
-//                _state.value = _state.value.copy(
-//                    exercise = Exercise(
-//                        id = 0,
-//                        name = _nameTextField.value.text
-//                    )
-//                )
-//
-//                state.value.exercise?.let { workoutUseCases.addNewExerciseUseCase.invoke(it) }
-//                getExerciseNames()
-//            }catch (ex: Exception){
-//
-//            }
-//        }
-
     }
 
-    private fun getExerciseNames(){
+    private fun getExerciseNames() {
         viewModelScope.launch {
-        exerciseUseCases.getAllExerciseUseCase().collect{ exerciseList ->
-            _state.value = _state.value.copy(
-                exerciseList = exerciseList
-            )
-        }
-
+            exerciseUseCases.getAllExerciseUseCase().collect { exerciseList ->
+                _state.value = _state.value.copy(
+                    exerciseList = exerciseList
+                )
+            }
         }
     }
-
-
-
 
 
     // Navigation
-    fun navBack(openAndPopUp: (String, String) -> Unit ) = openAndPopUp(EXERCISE_APP_SCREEN, SETTINGS_SCREEN)
+    fun navBack(openAndPopUp: (String, String) -> Unit) =
+        openAndPopUp(EXERCISE_APP_SCREEN, SETTINGS_SCREEN)
 
     fun restartApp(restartApp: (String) -> Unit) = restartApp(SPLASH_SCREEN)
 
