@@ -43,7 +43,7 @@ fun SettingsScreenContent(
         topBar = {
             TopToolbar_IconTitleIcon(
                 modifier = Modifier,
-                primaryActionIcon = R.drawable.ic_menu,
+                primaryActionIcon = R.drawable.left,
                 title = R.string.SettingsTitle,
                 primaryAction = { onBack() },
                 secondaryActionIcon = null,
@@ -54,6 +54,7 @@ fun SettingsScreenContent(
         content = {
 
             Column {
+                Text(text = "Settings screen")
 
                 Button(onClick = {  }) {
                     Text("Add Exercise")

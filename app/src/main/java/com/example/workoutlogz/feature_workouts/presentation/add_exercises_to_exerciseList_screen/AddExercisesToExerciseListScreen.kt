@@ -12,8 +12,11 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.workoutlogz.R
 import com.example.workoutlogz.feature_workouts.presentation.exercise_list_screen.ExerciseListViewModel
 
 
@@ -96,19 +99,25 @@ fun ExerciseItem(
     onSelectExercise: (String) -> Unit
 ) {
     Row(
-        verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
             .clickable { onSelectExercise(exerciseName) }
-            .padding(8.dp)
+            .padding(8.dp),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
-            imageVector = if (isSelected) Icons.Default.CheckCircle else Icons.Default.AddCircle,
+            painter = painterResource( if (isSelected) R.drawable.circle_check else R.drawable.plus),
             contentDescription = if (isSelected) "Selected" else "Not Selected",
-            modifier = Modifier.size(24.dp)
+            modifier = Modifier
+                .size(24.dp),
+            tint = MaterialTheme.colors.secondaryVariant
+        )       
+        Text(
+            text = exerciseName,
+            style = MaterialTheme.typography.h1,
+            modifier = Modifier
+                .padding(start = 20.dp)
         )
-        Spacer(modifier = Modifier.width(8.dp))
-        Text(text = exerciseName)
     }
 }
 

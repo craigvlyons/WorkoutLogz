@@ -76,7 +76,7 @@ fun ExerciseScreenContent(
         topBar = {
             TopToolbar_IconTitleIcon(
                 modifier = Modifier,
-                primaryActionIcon = R.drawable.ic_menu,
+                primaryActionIcon = R.drawable.settings,
                 title = R.string.ExerciseTitle,
                 primaryAction = {  onSettingsClick(openScreen)},
                 secondaryActionIcon = R.drawable.ic_menu,
@@ -191,13 +191,13 @@ fun ExerciseListMainPage(
     ) {
 
         ClickableRowIconTitle(
-            iconResourceId = R.drawable.ic_menu,
+            iconResourceId = R.drawable.clipboard,
             title = "New List...",
             onClick = { openScreen(NEW_EXERCISE_LIST_SCREEN) },
             textStyle = MaterialTheme.typography.subtitle1
         )
         ClickableRowWithIconAndArrow(
-            iconResourceId = R.drawable.ic_menu,
+            iconResourceId = R.drawable.dumbbell_solid,
             title = "My Exercises",
             total = "18",
             onClick = { onExerciseClick(openScreen) }
@@ -210,7 +210,7 @@ fun ExerciseListMainPage(
                 }
             ) { exerciseList ->
                 ClickableRowIconExerciseArrow(
-                    iconResourceId = R.drawable.ic_menu,
+                    iconResourceId = R.drawable.clipboard,
                     exercise = exerciseList,
                     onClick = {  onExerciseListClick(openScreen, exerciseList.id) },
                     textStyle = MaterialTheme.typography.subtitle1

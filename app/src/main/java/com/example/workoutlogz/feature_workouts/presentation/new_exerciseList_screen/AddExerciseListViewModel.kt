@@ -19,7 +19,7 @@ class AddExerciseListViewModel @Inject constructor(
     private val exerciseListUseCase: ExerciseListUseCases
 ): ViewModel() {
     private val _titleTextField = mutableStateOf(BasicTextFieldState(
-        hint = "Exercise List Title..."
+        hint = "Full Body, Legs, Tuesday..."
     ))
     private val _descriptionTextField = mutableStateOf(BasicTextFieldState(
         hint = "Exercise List Description..."
