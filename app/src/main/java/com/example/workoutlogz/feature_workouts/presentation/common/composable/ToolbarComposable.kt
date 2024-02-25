@@ -4,6 +4,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -126,6 +127,53 @@ fun TopToolbar_IconTitleIcon(
 }
 
 @Composable
+fun TopToolbar_TitleIcon(
+    modifier: Modifier,
+    @StringRes title: Int,
+    @DrawableRes primaryActionIcon: Int,
+    primaryAction: () -> Unit,
+) {
+    TopAppBar(
+        modifier = Modifier,
+        contentColor = MaterialTheme.colors.onPrimary,
+        backgroundColor = MaterialTheme.colors.background,
+        title = {
+            Row(
+                modifier = modifier
+                    .padding(start = 0.dp, end = 16.dp)
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                // Left Button
+                // First item, left-aligned
+                Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.CenterStart) {
+
+                }
+
+                // Second item, centered
+                Box(modifier = Modifier.weight(2f), contentAlignment = Alignment.Center) {
+                    // Title in the Middle
+                    Text(text = stringResource(title))
+                }
+                Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.CenterEnd) {
+                    IconButton(onClick = primaryAction) {
+                        Icon(
+                            painter = painterResource(id = primaryActionIcon),
+                            contentDescription = "Back",
+                            modifier = Modifier.size(32.dp),
+                            tint = MaterialTheme.colors.secondaryVariant
+                        )
+                    }
+
+                }
+            }
+        }
+    )
+}
+
+
+@Composable
 fun TopToolbar_DynamicTitle(
     modifier: Modifier,
     title: String,
@@ -169,9 +217,51 @@ fun TopToolbar_DynamicTitle(
                         IconButton(onClick = secondaryAction) {
                             Icon(
                                 painter = painterResource(id = secondaryActionIcon),
-                                contentDescription = "Right Button"
+                                contentDescription = "Right Button",
+                                modifier = Modifier.size(24.dp),
+                                tint = MaterialTheme.colors.secondaryVariant
                             )
                         }
+                    }
+                }
+            }
+        }
+    )
+}
+
+@Composable
+fun TopToolbar_TextButtonTitleTextButton(
+    modifier: Modifier,
+    title: String,
+    primaryAction: () -> Unit,
+    secondaryAction: () -> Unit
+) {
+    TopAppBar(
+        modifier = Modifier,
+        contentColor = MaterialTheme.colors.onPrimary,
+        backgroundColor = MaterialTheme.colors.background,
+        title = {
+            Row(
+                modifier = modifier
+                    .padding(start = 0.dp, end = 16.dp)
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.CenterStart) {
+                    CancelTextButton(text = "Cancel") {
+                        primaryAction()
+                    }
+                }
+                Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
+                    Text(text = title)
+                }
+                Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.CenterEnd) {
+                    TextButton(onClick = { secondaryAction() }) {
+                        Text(
+                            text = "Done",
+                            color = MaterialTheme.colors.secondaryVariant
+                        )
                     }
                 }
             }
@@ -182,14 +272,30 @@ fun TopToolbar_DynamicTitle(
 @Preview()
 @Composable
 fun preview_TopToolbar_IconTitleIcon() {
-    TopToolbar_IconTitleIcon(
-        Modifier,
-        title = R.string.app_name,
-        primaryActionIcon = R.drawable.ic_menu,
-        primaryAction = {/* */ },
-        secondaryActionIcon = R.drawable.ic_menu,
-        secondaryAction = {/* */ }
-    )
+    Column {
+        TopToolbar_TitleIcon(
+            modifier = Modifier,
+            title = R.string.app_name,
+            primaryActionIcon = R.drawable.settings,
+            primaryAction = { }
+        )
+        TopToolbar_IconTitleIcon(
+            Modifier,
+            title = R.string.app_name,
+            primaryActionIcon = R.drawable.ic_menu,
+            primaryAction = {/* */ },
+            secondaryActionIcon = R.drawable.edit,
+            secondaryAction = {/* */ }
+        )
+        TopToolbar_TextButtonTitleTextButton(
+            modifier = Modifier,
+            title = "Exercise List",
+            primaryAction = {  },
+            secondaryAction = { }
+        )
+            
+
+    }
 }
 
 

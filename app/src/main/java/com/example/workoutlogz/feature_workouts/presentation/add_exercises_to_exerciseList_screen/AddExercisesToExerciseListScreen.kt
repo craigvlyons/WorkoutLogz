@@ -28,7 +28,6 @@ fun AddExercisesToExerciseListScreen(
     onExerciseSelected: (String) -> Unit,
     onSearch: (String) -> Unit,
 ) {
-
     AddExercisesToExerciseListContent(
         exercises,
         selectedExercises,
@@ -36,7 +35,6 @@ fun AddExercisesToExerciseListScreen(
         onExerciseSelected,
         onSearch
     )
-
 }
 
 @Composable

@@ -35,6 +35,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun ExerciseListScreen(
     openAndPopUp: (String, String) -> Unit,
+    openScreen: (String) -> Unit,
     exerciseListId: Int = -1,
     viewModel: ExerciseListViewModel = hiltViewModel()
 ) {
@@ -44,17 +45,19 @@ fun ExerciseListScreen(
     val selectedExercises by viewModel.selectedExercises
     ExerciseListContent(
         onBack = { viewModel.navBack(openAndPopUp) },
-        state,
-        title,
-        allExerciseNames,
-        selectedExercises,
+        openScreen =  openScreen,
+        state = state,
+        title =  title,
+        allExerciseNames = allExerciseNames,
+        selectedExercises = selectedExercises,
         onExerciseSelected = { name ->
             viewModel.onEvent(
                 ExerciseListEvent.ToggleExerciseSelection(
                     name
                 )
             )
-        }
+        },
+        onExerciseListClick = { openScreen, id -> viewModel.onEditExerciseListClick(openScreen, id) }
     )
 }
 
@@ -63,11 +66,13 @@ fun ExerciseListScreen(
 @Composable
 fun ExerciseListContent(
     onBack: () -> Unit,
+    openScreen: (String) -> Unit,
     state: ExerciseListState,
     title: String,
     allExerciseNames: List<String>,
     selectedExercises: Set<String>,
     onExerciseSelected: (String) -> Unit,
+    onExerciseListClick: ((String) -> Unit, Int) -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val coroutineScope = rememberCoroutineScope() // We need to remember the coroutine scope
@@ -94,8 +99,8 @@ fun ExerciseListContent(
                     primaryActionIcon = R.drawable.left,
                     title = title,
                     primaryAction = { onBack() },
-                    secondaryActionIcon = null,
-                    secondaryAction = { /* Handle secondary action here */ }
+                    secondaryActionIcon = R.drawable.edit,
+                    secondaryAction = { state.exerciseList?.let { onExerciseListClick(openScreen, it.id) } }
                 )
             },
             backgroundColor = MaterialTheme.colors.background,

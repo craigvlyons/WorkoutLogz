@@ -93,9 +93,7 @@ class ExerciseAppViewModel @Inject constructor(
     fun onExerciseClick(openScreen: (String) -> Unit) = openScreen(ADD_EXERCISE_NAME_SCREEN)
 
     fun onExerciseListClick(openScreen: (String) -> Unit, exerciseListId: Int) {
-         // openScreen("$EXERCISE_LIST_SCREEN?$EXERCISELIST_ID={${exerciseListId}}")
-        //  openScreen(EXERCISE_LIST_SCREEN +"?$EXERCISELIST_ID={${exerciseListId}}")
-        openScreen("$EXERCISE_LIST_SCREEN/$exerciseListId")
+         openScreen("$EXERCISE_LIST_SCREEN/$exerciseListId")
     }
 
     companion object {

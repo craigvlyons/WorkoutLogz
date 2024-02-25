@@ -6,22 +6,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.room.util.copy
 import com.example.workoutlogz.feature_workouts.ADD_EXERCISE_NAME_SCREEN
+import com.example.workoutlogz.feature_workouts.EDIT_EXERCISE_LIST_SCREEN
 import com.example.workoutlogz.feature_workouts.EXERCISELIST_ID
 import com.example.workoutlogz.feature_workouts.EXERCISE_APP_SCREEN
 import com.example.workoutlogz.feature_workouts.EXERCISE_LIST_SCREEN
-import com.example.workoutlogz.feature_workouts.NEW_EXERCISE_LIST_SCREEN
 import com.example.workoutlogz.feature_workouts.SETTINGS_SCREEN
-import com.example.workoutlogz.feature_workouts.data.models.ExerciseList
 import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.ExerciseUseCases
 import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.exerciseList.ExerciseListUseCases
-import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.exerciseList.GetExerciseListWithWorkouts
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -154,7 +150,9 @@ class ExerciseListViewModel @Inject constructor(
 
     fun onExerciseClick(openScreen: (String) -> Unit) = openScreen(ADD_EXERCISE_NAME_SCREEN)
     fun navBack(openAndPopUp: (String, String) -> Unit ) = openAndPopUp(EXERCISE_APP_SCREEN, EXERCISE_LIST_SCREEN)
-
+    fun onEditExerciseListClick(openScreen: (String) -> Unit, exerciseListId: Int) {
+        openScreen("$EDIT_EXERCISE_LIST_SCREEN/$exerciseListId")
+    }
 
     companion object {
         private const val TAG = "ExerciseListViewModel"
