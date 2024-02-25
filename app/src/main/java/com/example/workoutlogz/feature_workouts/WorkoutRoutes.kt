@@ -10,6 +10,7 @@ const val WORKOUT_SCREEN = "WorkoutScreen"
 const val EXERCISE_APP_SCREEN = "ExerciseAppScreen"
 const val ADD_EXERCISE_NAME_SCREEN = "AddExerciseNamesScreen"
 const val NEW_EXERCISE_LIST_SCREEN = "NewExerciseListScreen"
+const val EDIT_EXERCISE_LIST_SCREEN = "EditExerciseListScreen"
 const val EXERCISE_LIST_SCREEN = "ExerciseListScreen"
 
 const val WORKOUT_ID = "workoutId"
