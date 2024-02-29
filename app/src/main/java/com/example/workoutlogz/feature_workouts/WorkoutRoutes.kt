@@ -13,9 +13,10 @@ const val NEW_EXERCISE_LIST_SCREEN = "NewExerciseListScreen"
 const val EDIT_EXERCISE_LIST_SCREEN = "EditExerciseListScreen"
 const val EXERCISE_LIST_SCREEN = "ExerciseListScreen"
 
-const val WORKOUT_ID = "workoutId"
-const val WORKOUT_ID_ARG = "?$WORKOUT_ID={$WORKOUT_ID}"
-
 const val EXERCISELIST_ID = "exerciseListId"
 const val EXERCISELIST_ID_ARG = "?$EXERCISELIST_ID={$EXERCISELIST_ID}"
+const val WORKOUT_NAME = "workoutName"
+const val WORKOUT_NAME_ARG = "?$WORKOUT_NAME={$WORKOUT_NAME}&$EXERCISELIST_ID={$EXERCISELIST_ID}"
+
+const val WORKOUT_SCREEN_ROUTE = "$WORKOUT_SCREEN/{$WORKOUT_NAME}/{$EXERCISELIST_ID}"
 

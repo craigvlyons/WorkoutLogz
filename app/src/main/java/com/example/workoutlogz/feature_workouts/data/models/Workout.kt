@@ -5,12 +5,10 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
 
-@Entity(foreignKeys = [ForeignKey(entity = ExerciseList::class,
-    parentColumns = arrayOf("id"),
-    childColumns = arrayOf("exerciseListId"))])
+@Entity
 data class Workout(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val exerciseListId: Int,
+    //val exerciseListId: Int,
     val name: String = "",
     val set: Int = 0,
     val rep: Int = 0,

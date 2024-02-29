@@ -2,38 +2,38 @@ package com.example.workoutlogz.di
 
 import android.app.Application
 import androidx.room.Room
-import androidx.room.RoomDatabase
-import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.workoutlogz.feature_workouts.data.data_source.ExerciseDB
-import com.example.workoutlogz.feature_workouts.data.data_source.ExerciseDao
-import com.example.workoutlogz.feature_workouts.data.models.Exercise
 import com.example.workoutlogz.feature_workouts.data.repository.ExerciseListRepositoryImpl
 import com.example.workoutlogz.feature_workouts.data.repository.ExerciseRepositoryImpl
 import com.example.workoutlogz.feature_workouts.data.repository.WorkoutRepositoryImpl
 import com.example.workoutlogz.feature_workouts.domain.repository.ExerciseListRepository
 import com.example.workoutlogz.feature_workouts.domain.repository.ExerciseRepository
 import com.example.workoutlogz.feature_workouts.domain.repository.WorkoutRepository
-import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.AddNewExerciseUseCase
-import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.DeleteExerciseByIdUseCase
-import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.ExerciseUseCases
-import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.GetAllExerciseUseCase
-import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.GetExerciseByNameUseCase
-import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.IsExerciseExistsUseCase
+import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.exercises.AddNewExerciseUseCase
+import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.exercises.DeleteExerciseByIdUseCase
+import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.exercises.ExerciseUseCases
+import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.exercises.GetAllExerciseUseCase
+import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.exercises.GetExerciseByNameUseCase
+import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.exercises.IsExerciseExistsUseCase
 
 import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.exerciseList.AddExerciseListUseCase
 import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.exerciseList.ExerciseListUseCases
 import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.exerciseList.GetAllExerciseListUseCase
 import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.exerciseList.GetExerciseListByIdUseCase
-import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.exerciseList.GetExerciseListWithWorkouts
 import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.exerciseList.UpdateExerciseListNamesUseCase
 import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.exerciseList.UpdateExerciseListUseCase
+import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.workout.DeleteWorkoutByIdUseCase
+import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.workout.DeleteWorkoutByNameUseCase
+import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.workout.GetAllWorkoutsUseCase
+import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.workout.GetWorkoutByIdUseCase
+import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.workout.GetWorkoutByNameUseCase
+import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.workout.InsertWorkoutUseCase
+import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.workout.UpdateWorkoutUseCase
+import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.workout.WorkoutUseCases
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import javax.inject.Singleton
 
 @Module
@@ -81,7 +81,7 @@ object ExerciseModule {
     // UseCases
     @Provides
     @Singleton
-    fun provideExerciseUseCases(repository: ExerciseRepository) : ExerciseUseCases{
+    fun provideExerciseUseCases(repository: ExerciseRepository) : ExerciseUseCases {
         return ExerciseUseCases(
             getAllExerciseUseCase = GetAllExerciseUseCase(repository),
             addNewExerciseUseCase = AddNewExerciseUseCase(repository),
@@ -103,5 +103,18 @@ object ExerciseModule {
         )
     }
 
+    @Provides
+    @Singleton
+    fun provideWorkoutUseCase(repository: WorkoutRepository): WorkoutUseCases{
+        return WorkoutUseCases(
+            insertWorkoutUseCase = InsertWorkoutUseCase(repository),
+            updateWorkoutUseCase = UpdateWorkoutUseCase(repository),
+            getAllWorkoutsUseCase = GetAllWorkoutsUseCase(repository),
+            getWorkoutByIdUseCase = GetWorkoutByIdUseCase(repository),
+            getWorkoutByNameUseCase = GetWorkoutByNameUseCase(repository),
+            deleteWorkoutByIdUseCase = DeleteWorkoutByIdUseCase(repository),
+            deleteWorkoutByNameUseCase = DeleteWorkoutByNameUseCase(repository)
+        )
+    }
 
 }

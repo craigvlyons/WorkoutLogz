@@ -9,7 +9,7 @@ import com.example.workoutlogz.feature_workouts.EXERCISE_APP_SCREEN
 import com.example.workoutlogz.feature_workouts.SETTINGS_SCREEN
 import com.example.workoutlogz.feature_workouts.SPLASH_SCREEN
 import com.example.workoutlogz.feature_workouts.data.models.Exercise
-import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.ExerciseUseCases
+import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.exercises.ExerciseUseCases
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

@@ -12,7 +12,8 @@ import com.example.workoutlogz.feature_workouts.EXERCISELIST_ID
 import com.example.workoutlogz.feature_workouts.EXERCISE_APP_SCREEN
 import com.example.workoutlogz.feature_workouts.EXERCISE_LIST_SCREEN
 import com.example.workoutlogz.feature_workouts.SETTINGS_SCREEN
-import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.ExerciseUseCases
+import com.example.workoutlogz.feature_workouts.WORKOUT_SCREEN
+import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.exercises.ExerciseUseCases
 import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.exerciseList.ExerciseListUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -42,8 +43,8 @@ class ExerciseListViewModel @Inject constructor(
     val selectedExercises: State<Set<String>> = _selectedExercises
 
 
+    val exerciseListId: Int = savedStateHandle.get(EXERCISELIST_ID) ?: -1
     init {
-        val exerciseListId: Int = savedStateHandle.get(EXERCISELIST_ID) ?: -1
 
         getAllExerciseNamesList()
 
@@ -54,7 +55,6 @@ class ExerciseListViewModel @Inject constructor(
                 try {
                     if (exerciseListId != -1) {
                         loadExerciseList(exerciseListId)
-                        Log.i(TAG, "Exercise List name: ${_state.value.exerciseListWithWorkouts?.exerciseList?.name}")
                     }
                 } catch (e: Exception) {
                     Log.e(TAG, "Error fetching ExerciseListWithWorkouts", e)
@@ -107,7 +107,7 @@ class ExerciseListViewModel @Inject constructor(
     }
 
     // Function to handle selection/deselection of exercises
-    fun toggleExerciseSelection(exerciseName: String) {
+    private fun toggleExerciseSelection(exerciseName: String) {
         val currentSet = _selectedExercises.value
         if (currentSet.contains(exerciseName)) {
             _selectedExercises.value = currentSet - exerciseName // Deselect
@@ -152,6 +152,9 @@ class ExerciseListViewModel @Inject constructor(
     fun navBack(openAndPopUp: (String, String) -> Unit ) = openAndPopUp(EXERCISE_APP_SCREEN, EXERCISE_LIST_SCREEN)
     fun onEditExerciseListClick(openScreen: (String) -> Unit, exerciseListId: Int) {
         openScreen("$EDIT_EXERCISE_LIST_SCREEN/$exerciseListId")
+    }
+    fun onWorkoutClick(openScreen: (String) -> Unit, workoutName: String) {
+        openScreen("$WORKOUT_SCREEN/$workoutName/$exerciseListId")
     }
 
     companion object {
