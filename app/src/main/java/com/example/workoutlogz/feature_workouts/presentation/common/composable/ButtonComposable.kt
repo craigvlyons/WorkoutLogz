@@ -27,6 +27,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.magnifier
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -34,11 +35,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Transparent
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.workoutlogz.ui.theme.Shapes
+import com.example.workoutlogz.ui.theme.White
 
 @Composable
 fun BasicTextButton(text: String, modifier: Modifier, action: () -> Unit) {
@@ -47,6 +54,57 @@ fun BasicTextButton(text: String, modifier: Modifier, action: () -> Unit) {
         modifier = modifier.clip(shape = Shapes.large)
     ) { Text(text = text) }
 }
+
+@Composable
+fun SmallBasicTextButton(text: String, modifier: Modifier = Modifier, action: () -> Unit) {
+    TextButton(
+        onClick = action,
+        modifier = modifier
+            .padding(start = 4.dp, end = 4.dp)
+            .clip(shape = Shapes.small)
+            .background(MaterialTheme.colors.primaryVariant)
+            .size(32.dp)
+    ) { Text(
+        text = text,
+        style = TextStyle(
+            fontFamily = FontFamily.Default,
+            fontWeight = FontWeight.Bold,
+            fontSize = 10.sp,
+            lineHeight = 10.sp,
+            letterSpacing = 0.35.sp,
+            color = White
+        ),
+        ) }
+}
+
+@Composable
+fun SmallOutlineButton(text: String, modifier: Modifier = Modifier, action: () -> Unit) {
+    OutlinedButton(
+        onClick = action,
+        modifier = modifier
+            .padding(start = 4.dp, end = 4.dp)
+            .size(32.dp), // This might not work as expected, as OutlinedButton does not have a size parameter. Consider wrapping it in a Box with specified size if needed.
+        // Customize the button colors here
+        colors = ButtonDefaults.outlinedButtonColors(
+            backgroundColor = Color.Transparent, // Sets the background to transparent
+            contentColor = Color.White // Sets the text color to white
+        ),
+        border = ButtonDefaults.outlinedBorder.copy(brush = SolidColor(Color.White)), // Sets the border color to white
+        shape = RoundedCornerShape(25) // Sets a rounded shape
+    ) {
+        Text(
+            text = text,
+            style = TextStyle(
+                fontWeight = FontWeight.Bold,
+                fontSize = 10.sp,
+                lineHeight = 12.sp,
+                letterSpacing = 0.35.sp,
+                //color = Color.White // This color setting is redundant if contentColor is set
+            )
+        )
+    }
+}
+
 
 @Composable
 fun BasicButton(text: String, modifier: Modifier, action: () -> Unit) {
@@ -177,6 +235,8 @@ fun CancelTextButton(text: String, modifier: Modifier = Modifier, action: () -> 
 fun PreviewButtons() {
     Column {
         BasicTextButton(text = "Basic text Button", modifier = Modifier) { }
+        SmallBasicTextButton(text = "2.5") { }
+        SmallOutlineButton(text = "2.5"){ }
         BasicButton(text = "Basic Button", modifier = Modifier) { }
         ActionIconButton(
             onClick = { /*TODO*/ },

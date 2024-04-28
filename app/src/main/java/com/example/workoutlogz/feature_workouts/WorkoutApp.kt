@@ -32,6 +32,7 @@ import com.example.workoutlogz.feature_workouts.presentation.add_workout_names.A
 import com.example.workoutlogz.feature_workouts.presentation.common.composable.PermissionDialog
 import com.example.workoutlogz.feature_workouts.presentation.common.composable.RationaleDialog
 import com.example.workoutlogz.feature_workouts.presentation.edit_exercise_list_screen.EditExerciseListScreen
+import com.example.workoutlogz.feature_workouts.presentation.edit_workout_screen.EditWorkoutScreen
 import com.example.workoutlogz.feature_workouts.presentation.exercise_app.ExerciseAppScreen
 import com.example.workoutlogz.feature_workouts.presentation.exercise_list_screen.ExerciseListScreen
 import com.example.workoutlogz.feature_workouts.presentation.new_exerciseList_screen.NewExerciseListScreen
@@ -182,8 +183,45 @@ fun NavGraphBuilder.WorkoutGraph(appState: WorkoutAppState){
         // Use arguments as needed
         WorkoutScreen(
             openAndPopUp = {route, popUp -> appState.navigateAndPopUp(route, popUp) },
+            openScreen = {route -> appState.navigate(route)},
             exerciseListId,
             workoutName,
+        )
+    }
+
+    composable(
+        route = "$EDIT_WORKOUT_SCREEN/{$WORKOUT_ID}",
+        arguments = listOf(
+            navArgument(WORKOUT_ID) { type = NavType.IntType },
+            //navArgument(EXERCISELIST_ID) { type = NavType.IntType }
+        )
+    ) { backStackEntry ->
+        // Extract arguments
+        val workoutId = backStackEntry.arguments?.getInt(WORKOUT_ID) ?: -1
+        //val exerciseListId = backStackEntry.arguments?.getInt(EXERCISELIST_ID) ?: -1
+        // Use arguments as needed
+        EditWorkoutScreen(
+            openAndPopUp = {route, popUp -> appState.navigateAndPopUp(route, popUp) },
+            //openScreen = {route -> appState.navigate(route)},
+            workoutId = workoutId,
+        )
+    }
+    composable(
+        route = "$EDIT_WORKOUT_SCREEN/{$WORKOUT_ID}/{$EXERCISELIST_ID}",
+        arguments = listOf(
+            navArgument(WORKOUT_ID) { type = NavType.IntType },
+            navArgument(EXERCISELIST_ID) { type = NavType.IntType }
+        )
+    ) { backStackEntry ->
+        // Extract arguments
+        val workoutId = backStackEntry.arguments?.getInt(WORKOUT_ID) ?: -1
+        val exerciseListId = backStackEntry.arguments?.getInt(EXERCISELIST_ID) ?: -1
+        // Use arguments as needed
+        EditWorkoutScreen(
+            openAndPopUp = {route, popUp -> appState.navigateAndPopUp(route, popUp) },
+            //openScreen = {route -> appState.navigate(route)},
+            workoutId = workoutId,
+            exerciseListId = exerciseListId
         )
     }
 

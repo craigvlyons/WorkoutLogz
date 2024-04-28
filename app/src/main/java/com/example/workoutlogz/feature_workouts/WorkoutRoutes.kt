@@ -13,6 +13,7 @@ const val NEW_EXERCISE_LIST_SCREEN = "NewExerciseListScreen"
 const val EDIT_EXERCISE_LIST_SCREEN = "EditExerciseListScreen"
 const val EXERCISE_LIST_SCREEN = "ExerciseListScreen"
 
+const val WORKOUT_ID = "workoutId"
 const val EXERCISELIST_ID = "exerciseListId"
 const val EXERCISELIST_ID_ARG = "?$EXERCISELIST_ID={$EXERCISELIST_ID}"
 const val WORKOUT_NAME = "workoutName"

@@ -17,8 +17,11 @@ limitations under the License.
 package com.example.workoutlogz.feature_workouts.presentation.common.composable
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.background
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
+import androidx.compose.material.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -26,18 +29,34 @@ import androidx.compose.ui.res.stringResource
 
 @Composable
 fun BasicField(
-  @StringRes text: Int,
-  value: String,
-  onNewValue: (String) -> Unit,
-  modifier: Modifier = Modifier
+    text: String,
+    value: String,
+    onNewValue: (String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
-  OutlinedTextField(
-    singleLine = true,
-    modifier = modifier,
-    value = value,
-    onValueChange = { onNewValue(it) },
-    placeholder = { Text(stringResource(text)) }
-  )
+    TextField(
+        singleLine = true,
+        modifier = modifier.background(MaterialTheme.colors.primary),
+        value = value,
+        onValueChange = { onNewValue(it) },
+        placeholder = { Text(text) }
+    )
+}
+
+@Composable
+fun BasicOutlinedField(
+    text: String,
+    value: String,
+    onNewValue: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    OutlinedTextField(
+        singleLine = true,
+        modifier = modifier.background(MaterialTheme.colors.primaryVariant),
+        value = value,
+        onValueChange = { onNewValue(it) },
+        placeholder = { Text(text) }
+    )
 }
 
 

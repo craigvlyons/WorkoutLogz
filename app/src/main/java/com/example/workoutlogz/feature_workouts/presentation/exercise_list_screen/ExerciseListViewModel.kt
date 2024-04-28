@@ -149,6 +149,7 @@ class ExerciseListViewModel @Inject constructor(
     fun onSettingsClick(openScreen: (String) -> Unit) = openScreen(SETTINGS_SCREEN)
 
     fun onExerciseClick(openScreen: (String) -> Unit) = openScreen(ADD_EXERCISE_NAME_SCREEN)
+
     fun navBack(openAndPopUp: (String, String) -> Unit ) = openAndPopUp(EXERCISE_APP_SCREEN, EXERCISE_LIST_SCREEN)
     fun onEditExerciseListClick(openScreen: (String) -> Unit, exerciseListId: Int) {
         openScreen("$EDIT_EXERCISE_LIST_SCREEN/$exerciseListId")

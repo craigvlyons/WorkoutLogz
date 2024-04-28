@@ -27,6 +27,7 @@ import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.wor
 import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.workout.GetAllWorkoutsUseCase
 import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.workout.GetWorkoutByIdUseCase
 import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.workout.GetWorkoutByNameUseCase
+import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.workout.GetWorkoutListByName
 import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.workout.InsertWorkoutUseCase
 import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.workout.UpdateWorkoutUseCase
 import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.workout.WorkoutUseCases
@@ -113,7 +114,8 @@ object ExerciseModule {
             getWorkoutByIdUseCase = GetWorkoutByIdUseCase(repository),
             getWorkoutByNameUseCase = GetWorkoutByNameUseCase(repository),
             deleteWorkoutByIdUseCase = DeleteWorkoutByIdUseCase(repository),
-            deleteWorkoutByNameUseCase = DeleteWorkoutByNameUseCase(repository)
+            deleteWorkoutByNameUseCase = DeleteWorkoutByNameUseCase(repository),
+            getWorkoutListByName = GetWorkoutListByName(repository)
         )
     }
 
