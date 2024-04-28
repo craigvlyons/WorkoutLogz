@@ -10,8 +10,7 @@ import com.example.workoutlogz.feature_workouts.EXERCISELIST_ID
 import com.example.workoutlogz.feature_workouts.EXERCISE_LIST_SCREEN
 import com.example.workoutlogz.feature_workouts.EDIT_EXERCISE_LIST_SCREEN
 import com.example.workoutlogz.feature_workouts.SPLASH_SCREEN
-import com.example.workoutlogz.feature_workouts.data.models.ExerciseList
-import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.ExerciseUseCases
+import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.exercises.ExerciseUseCases
 import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.exerciseList.ExerciseListUseCases
 import com.example.workoutlogz.feature_workouts.presentation.exercise_list_screen.ExerciseListState
 import com.example.workoutlogz.feature_workouts.presentation.new_exerciseList_screen.BasicTextFieldState
@@ -64,10 +63,6 @@ class EditExerciseListViewModel @Inject constructor(
                 try {
                     if (exerciseListId != -1) {
                         loadTextBoxes(exerciseListId)
-                        Log.i(
-                            TAG,
-                            "Exercise List name: ${_state.value.exerciseListWithWorkouts?.exerciseList?.name}"
-                        )
                     }
                 } catch (e: Exception) {
                     Log.e(TAG, "Error fetching ExerciseListWithWorkouts", e)

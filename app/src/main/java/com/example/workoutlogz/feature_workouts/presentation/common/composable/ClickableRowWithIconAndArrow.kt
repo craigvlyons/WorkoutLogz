@@ -167,25 +167,21 @@ fun ClickableRowIconExerciseArrow(
         Column {
 
         // Title
-        exercise.name?.let {
             Text(
-                text = it,
+                text = exercise.name,
                 style = textStyle,
                 modifier = Modifier.padding(start = 10.dp),
                 color = MaterialTheme.colors.onPrimary,
                 fontSize = 18.sp
             )
-        }
             // Title
-            exercise.description?.let {
-                Text(
-                    text = it,
-                    style = textStyle,
-                    color = MaterialTheme.colors.secondary,
-                    modifier = Modifier.padding(start = 10.dp),
-                    fontSize = 16.sp
-                )
-            }
+            Text(
+                text = exercise.description,
+                style = textStyle,
+                color = MaterialTheme.colors.secondary,
+                modifier = Modifier.padding(start = 10.dp),
+                fontSize = 16.sp
+            )
 
         }
 

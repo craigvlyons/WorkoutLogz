@@ -3,14 +3,14 @@ package com.example.workoutlogz.feature_workouts.presentation.splashScreen
 import androidx.compose.runtime.mutableStateOf
 import com.example.workoutlogz.feature_workouts.EXERCISE_APP_SCREEN
 import com.example.workoutlogz.feature_workouts.SPLASH_SCREEN
-import com.example.workoutlogz.feature_workouts.WorkoutViewModel
+import com.example.workoutlogz.feature_workouts.WorkoutAppViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
 
-) : WorkoutViewModel() {
+) : WorkoutAppViewModel() {
     val showError = mutableStateOf(false)
 
     init {

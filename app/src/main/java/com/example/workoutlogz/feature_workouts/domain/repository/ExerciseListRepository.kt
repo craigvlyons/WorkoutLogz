@@ -11,7 +11,6 @@ interface ExerciseListRepository {
     suspend fun deleteById(exerciseListId: Int)
     suspend fun getAllWorkouts(): Flow<List<Workout>>
     suspend fun getExerciseListById(exerciseListId: Int): Flow<ExerciseList>
-    suspend fun getAllWorkoutsInExerciseList(exerciseListId: Int): Flow<List<Workout>>
     suspend fun upDateExerciseListExerciseNames(exerciseListId: Int, exerciseNames: List<String>)
     suspend fun upDateExerciseList(exerciseList: ExerciseList)
 }

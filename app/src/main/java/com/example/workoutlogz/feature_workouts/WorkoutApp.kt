@@ -32,11 +32,13 @@ import com.example.workoutlogz.feature_workouts.presentation.add_workout_names.A
 import com.example.workoutlogz.feature_workouts.presentation.common.composable.PermissionDialog
 import com.example.workoutlogz.feature_workouts.presentation.common.composable.RationaleDialog
 import com.example.workoutlogz.feature_workouts.presentation.edit_exercise_list_screen.EditExerciseListScreen
+import com.example.workoutlogz.feature_workouts.presentation.edit_workout_screen.EditWorkoutScreen
 import com.example.workoutlogz.feature_workouts.presentation.exercise_app.ExerciseAppScreen
 import com.example.workoutlogz.feature_workouts.presentation.exercise_list_screen.ExerciseListScreen
 import com.example.workoutlogz.feature_workouts.presentation.new_exerciseList_screen.NewExerciseListScreen
 import com.example.workoutlogz.feature_workouts.presentation.settings_screen.SettingScreen
 import com.example.workoutlogz.feature_workouts.presentation.splashScreen.SplashScreen
+import com.example.workoutlogz.feature_workouts.presentation.workout_screen.WorkoutScreen
 import com.example.workoutlogz.ui.theme.WorkoutLogzTheme
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
@@ -135,32 +137,6 @@ fun NavGraphBuilder.WorkoutGraph(appState: WorkoutAppState){
         NewExerciseListScreen(openAndPopUp = { route, popUp -> appState.navigateAndPopUp(route, popUp) })
     }
 
-//    composable(SIGN_UP_SCREEN) {
-//        SignUpScreen(openAndPopUp = { route, popUp -> appState.navigateAndPopUp(route, popUp) })
-//    }
-//
-//    composable(TASKS_SCREEN) {
-//        TasksScreen(openScreen = { route -> appState.navigate(route) })
-//    }
-//
-//    composable(EXERCISE_LIST_SCREEN) {
-//            ExerciseListScreen(popUpScreen = { appState.popUp() })
-//    }
-
-//    composable(
-//        route = "$EXERCISE_LIST_SCREEN$EXERCISELIST_ID_ARG",
-//        arguments = listOf(navArgument(EXERCISELIST_ID) {
-//            type = NavType.IntType
-//            defaultValue = -1
-//        })
-//    ) { //backStackEntry ->
-//        //val exerciseListId = backStackEntry.arguments?.getInt(EXERCISELIST_ID)
-//        ExerciseListScreen(
-//            //exerciseListId = exerciseListId,
-//            popUpScreen = { appState.popUp() }
-//        )
-//    }
-
     composable(
         route = "$EXERCISE_LIST_SCREEN/{$EXERCISELIST_ID}",
         arguments = listOf(navArgument(EXERCISELIST_ID) {
@@ -194,4 +170,89 @@ fun NavGraphBuilder.WorkoutGraph(appState: WorkoutAppState){
         }
     }
 
+    composable(
+        route = WORKOUT_SCREEN_ROUTE,
+        arguments = listOf(
+            navArgument(WORKOUT_NAME) { type = NavType.StringType },
+            navArgument(EXERCISELIST_ID) { type = NavType.IntType }
+        )
+    ) { backStackEntry ->
+        // Extract arguments
+        val workoutName = backStackEntry.arguments?.getString(WORKOUT_NAME) ?: ""
+        val exerciseListId = backStackEntry.arguments?.getInt(EXERCISELIST_ID) ?: -1
+        // Use arguments as needed
+        WorkoutScreen(
+            openAndPopUp = {route, popUp -> appState.navigateAndPopUp(route, popUp) },
+            openScreen = {route -> appState.navigate(route)},
+            exerciseListId,
+            workoutName,
+        )
+    }
+
+    composable(
+        route = "$EDIT_WORKOUT_SCREEN/{$WORKOUT_ID}",
+        arguments = listOf(
+            navArgument(WORKOUT_ID) { type = NavType.IntType },
+            //navArgument(EXERCISELIST_ID) { type = NavType.IntType }
+        )
+    ) { backStackEntry ->
+        // Extract arguments
+        val workoutId = backStackEntry.arguments?.getInt(WORKOUT_ID) ?: -1
+        //val exerciseListId = backStackEntry.arguments?.getInt(EXERCISELIST_ID) ?: -1
+        // Use arguments as needed
+        EditWorkoutScreen(
+            openAndPopUp = {route, popUp -> appState.navigateAndPopUp(route, popUp) },
+            //openScreen = {route -> appState.navigate(route)},
+            workoutId = workoutId,
+        )
+    }
+    composable(
+        route = "$EDIT_WORKOUT_SCREEN/{$WORKOUT_ID}/{$EXERCISELIST_ID}",
+        arguments = listOf(
+            navArgument(WORKOUT_ID) { type = NavType.IntType },
+            navArgument(EXERCISELIST_ID) { type = NavType.IntType }
+        )
+    ) { backStackEntry ->
+        // Extract arguments
+        val workoutId = backStackEntry.arguments?.getInt(WORKOUT_ID) ?: -1
+        val exerciseListId = backStackEntry.arguments?.getInt(EXERCISELIST_ID) ?: -1
+        // Use arguments as needed
+        EditWorkoutScreen(
+            openAndPopUp = {route, popUp -> appState.navigateAndPopUp(route, popUp) },
+            //openScreen = {route -> appState.navigate(route)},
+            workoutId = workoutId,
+            exerciseListId = exerciseListId
+        )
+    }
+
+
 }
+
+//    composable(SIGN_UP_SCREEN) {
+//        SignUpScreen(openAndPopUp = { route, popUp -> appState.navigateAndPopUp(route, popUp) })
+//    }
+//
+//    composable(TASKS_SCREEN) {
+//        TasksScreen(openScreen = { route -> appState.navigate(route) })
+//    }
+//
+//    composable(EXERCISE_LIST_SCREEN) {
+//            ExerciseListScreen(popUpScreen = { appState.popUp() })
+//    }
+
+//    composable(
+//        route = "$EXERCISE_LIST_SCREEN$EXERCISELIST_ID_ARG",
+//        arguments = listOf(navArgument(EXERCISELIST_ID) {
+//            type = NavType.IntType
+//            defaultValue = -1
+//        })
+//    ) { //backStackEntry ->
+//        //val exerciseListId = backStackEntry.arguments?.getInt(EXERCISELIST_ID)
+//        ExerciseListScreen(
+//            //exerciseListId = exerciseListId,
+//            popUpScreen = { appState.popUp() }
+//        )
+//    }
+
+
+

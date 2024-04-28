@@ -27,11 +27,6 @@ class ExerciseListRepositoryImpl(private val dao: ExerciseDao): ExerciseListRepo
        return dao.getExerciseListById(exerciseListId)
     }
 
-
-    override suspend fun getAllWorkoutsInExerciseList(exerciseListId: Int): Flow<List<Workout>> {
-        return dao.getWorkoutsForExerciseListId(exerciseListId)
-    }
-
     override suspend fun upDateExerciseListExerciseNames(
         exerciseListId: Int,
         exerciseNames: List<String>

@@ -21,6 +21,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.workoutlogz.R
 import com.example.workoutlogz.feature_workouts.presentation.add_exercises_to_exerciseList_screen.AddExercisesToExerciseListScreen
@@ -57,7 +58,8 @@ fun ExerciseListScreen(
                 )
             )
         },
-        onExerciseListClick = { openScreen, id -> viewModel.onEditExerciseListClick(openScreen, id) }
+        onExerciseListClick = { openScreen, id -> viewModel.onEditExerciseListClick(openScreen, id) },
+        onWorkoutClick = { openScreen, workoutName -> viewModel.onWorkoutClick(openScreen, workoutName) }
     )
 }
 
@@ -72,7 +74,8 @@ fun ExerciseListContent(
     allExerciseNames: List<String>,
     selectedExercises: Set<String>,
     onExerciseSelected: (String) -> Unit,
-    onExerciseListClick: ((String) -> Unit, Int) -> Unit
+    onExerciseListClick: ((String) -> Unit, Int) -> Unit,
+    onWorkoutClick: ((String)-> Unit, String) -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val coroutineScope = rememberCoroutineScope() // We need to remember the coroutine scope
@@ -129,7 +132,7 @@ fun ExerciseListContent(
                         ) {
                             ClickableRowTitleDateArrow(
                                 title = it,
-                                onClick = { /*TODO*/ },
+                                onClick = {onWorkoutClick(openScreen,it) },
                                 lastWorkout = "Yesterday"
                             )
                         }

@@ -5,6 +5,15 @@ import kotlinx.coroutines.flow.Flow
 
 interface WorkoutRepository {
 
-    fun getWorkouts(): Flow<List<Workout>>
+    fun getAllWorkouts(): Flow<List<Workout>>
+    fun getWorkoutListByName(workoutName: String): Flow<List<Workout>>
+    suspend fun insertWorkout(workout: Workout)
+    fun updateWorkout(workout: Workout)
+    fun getWorkoutById(workoutId: Int): Flow<Workout>
+    fun getWorkoutByName(workoutName: String): Flow<Workout>
+    fun deleteWorkoutByName(workoutName: String)
+    fun deleteWorkoutById(workoutId: Int)
+
+
 
 }

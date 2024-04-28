@@ -4,15 +4,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.workoutlogz.feature_workouts.ADD_EXERCISE_NAME_SCREEN
 import com.example.workoutlogz.feature_workouts.SETTINGS_SCREEN
-import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.ExerciseUseCases
+import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.exercises.ExerciseUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import android.util.Log
-import com.example.workoutlogz.feature_workouts.EXERCISELIST_ID
-import com.example.workoutlogz.feature_workouts.EXERCISELIST_ID_ARG
 import com.example.workoutlogz.feature_workouts.EXERCISE_LIST_SCREEN
 import com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.exerciseList.ExerciseListUseCases
 

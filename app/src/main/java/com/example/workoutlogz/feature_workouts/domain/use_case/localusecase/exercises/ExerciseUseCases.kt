@@ -1,4 +1,4 @@
-package com.example.workoutlogz.feature_workouts.domain.use_case.localusecase
+package com.example.workoutlogz.feature_workouts.domain.use_case.localusecase.exercises
 
 data class ExerciseUseCases(
     val getAllExerciseUseCase: GetAllExerciseUseCase,

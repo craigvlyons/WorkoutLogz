@@ -6,5 +6,4 @@ import com.example.workoutlogz.feature_workouts.data.models.ExerciseListWithWork
 data class ExerciseListState(
     var exerciseNamesList: List<String> = emptyList(),
     var exerciseList: ExerciseList? = null,
-    var exerciseListWithWorkouts: ExerciseListWithWorkouts? = null
 )

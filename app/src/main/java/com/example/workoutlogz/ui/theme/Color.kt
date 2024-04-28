@@ -24,3 +24,10 @@ val CharcoalGrey = Color(0xFF1E1E1E) // Dark grey with a hint of warmth
 val NightGrey = Color(0xFF222222) // Dark grey reminiscent of a night sky
 val DeepSpaceGrey = Color(0xFF252525) // Grey that suggests the deep expanse of space
 val ShadowGrey = Color(0xFF292929) // Grey similar to the shadows cast by moonlight
+
+// Orange
+val LightOrange = Color(0xFFFFCC99)
+val VividOrange = Color(0xFFFF6600)
+val BurntOrange = Color(0xFFCC5500)
+val GoldenOrange = Color(0xFFFFA500)
+val PeachOrange = Color(0xFFFFDAB9)

@@ -8,7 +8,7 @@ import com.example.workoutlogz.feature_workouts.data.models.Exercise
 import com.example.workoutlogz.feature_workouts.data.models.ExerciseList
 import com.example.workoutlogz.feature_workouts.data.models.Workout
 
-@Database(entities = [ExerciseList::class, Workout::class, Exercise::class], version = 2)
+@Database(entities = [ExerciseList::class, Workout::class, Exercise::class], version = 4)
 @TypeConverters(Converters::class)
 abstract class ExerciseDB: RoomDatabase() {
     abstract val exerciseDao: ExerciseDao
