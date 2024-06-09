@@ -1,42 +1,30 @@
-/*
-Copyright 2022 Google LLC
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    https://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
- */
-
 package com.example.workoutlogz.feature_workouts.presentation.common.composable
 
+import android.graphics.drawable.Icon
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.magnifier
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+//import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -220,6 +208,31 @@ fun DialogCancelButton(text: String, action: () -> Unit) {
 }
 
 @Composable
+fun DeleteIconButton(action: () -> Unit) {
+    Row(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+    TextButton(
+        onClick = action,
+        modifier = Modifier
+            .height(40.dp)
+            .clip(shape = RoundedCornerShape(90))
+            .padding(start = 16.dp, end = 16.dp)
+    ) {
+        Text(text = "Delete", color = Color.Red)
+        Spacer(Modifier.weight(1f))
+        Icon(
+            imageVector = Icons.Default.Delete,
+            contentDescription = "Delete Icon",
+            modifier = Modifier.size(24.dp), // Adjust the size as needed
+            tint = Color.Red
+        )
+    }
+    }
+}
+
+
+@Composable
 fun CancelTextButton(text: String, modifier: Modifier = Modifier, action: () -> Unit) {
     TextButton(onClick = action, modifier = modifier) {
         Text(
@@ -251,5 +264,6 @@ fun PreviewButtons() {
         DialogCancelButton(text = "Cancel") { }
         CancelTextButton(text = "Cancel", modifier = Modifier) { }
         ActionConfirmButton(text = "ADD Confirm", action = { /*TODO*/ }, enable = true)
+        DeleteIconButton({ /*TODO*/ })
     }
 }

@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import android.util.Log
+import androidx.compose.ui.text.capitalize
 import com.example.workoutlogz.BuildConfig
 
 
@@ -31,6 +32,9 @@ class AddExerciseNamesViewModel @Inject constructor(
         )
     )
     var nameTextField: State<AddExerciseTextFieldState> = _nameTextField
+    // Selected exercises names set
+    private var _exercisesNames = mutableStateOf<Set<String>>(setOf())
+    val exercisesNames: State<Set<String>> = _exercisesNames
 
     init {
         getExerciseNames()
@@ -59,33 +63,39 @@ class AddExerciseNamesViewModel @Inject constructor(
                 )
             }
             is AddNewExerciseName.DeleteExerciseById -> {
-                deleteExerciesById(event.exerciseId)
+                deleteExercisesById(event.exerciseId)
             }
             else -> {}
         }
     }
 
-    private fun deleteExerciesById(exerciseId: Int) {
+    private fun deleteExercisesById(exerciseId: Int) {
         viewModelScope.launch {
             try {
                 exerciseUseCases.deleteExerciseByIdUseCase(exerciseId)
-                Log.d(TAG, exerciseId.toString())
+                Log.d(TAG, "Deleted Exercise Id: $exerciseId")
             } catch (ex: Exception) {
                 // this is empty
             }
+            //TODO: need to remove the exercises that the exercise lists are using because the exercise does not exist.
         }
     }
 
     private fun saveExercise() {
+        // Retrieve the text from the input field, trim spaces, and convert to title case
         val exerciseName = _nameTextField.value.text.trim()
-        if (exerciseName.isBlank()) {
+            .split(" ")  // Split the string into words based on spaces
+            .joinToString(" "){it.capitalize()} // Capitalize the first letter of each word and join them back into a string
+        if (exerciseName.isBlank() || _exercisesNames.value.contains(exerciseName)) {
             // Handle empty input, e.g., update state to show an error message
+            // exercise name already exists
+            Log.i(TAG, "Exercise Name is blank or Exercise Name already exists.")
             return
         }
+
         viewModelScope.launch {
             try {
                 val newExercise = Exercise(name = exerciseName)
-                //TODO add check that workout exists before saving
                 exerciseUseCases.addNewExerciseUseCase.invoke(newExercise)
                 getExerciseNames()
                 // Optionally, update state to show success message
@@ -104,6 +114,7 @@ class AddExerciseNamesViewModel @Inject constructor(
                 _state.value = _state.value.copy(
                     exerciseList = exerciseList
                 )
+                _exercisesNames.value = exerciseList.map { it.name }.toSet()
             }
         }
     }
