@@ -127,6 +127,53 @@ fun SearchHintField(
     }
 }
 
+@Composable
+fun CommentHintField(
+    text: String,
+    hint: String,
+    isHintVisible: Boolean = true,
+    onValueChange: (String) -> Unit,
+    textStyle: TextStyle,
+    singleLine: Boolean = false,
+    onFocusChange: (FocusState) -> Unit,
+    modifier: Modifier = Modifier,
+    minLines: Int = 3
+) {
+    Box(
+        modifier = modifier
+            //.padding(10.dp)
+            .border(0.5.dp, Color.DarkGray, RoundedCornerShape(size = 16.dp))
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(start = 5.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            BasicTextField(
+                value = text,
+                onValueChange = onValueChange,
+                singleLine = singleLine,
+                textStyle = textStyle,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp)
+                    .onFocusChanged { onFocusChange(it) },
+                minLines = minLines
+            )
+        }
+        if (isHintVisible) {
+            Text(
+                modifier = Modifier
+                    .padding(start = 8.dp)
+                    .align(Alignment.CenterStart),
+                text = hint,
+                style = TextStyle(fontSize = 20.sp),
+                color = MaterialTheme.colors.secondary,
+            )
+        }
+    }
+}
+
 @Preview
 @Composable
 fun previewTextFields() {
@@ -141,6 +188,14 @@ fun previewTextFields() {
         SearchHintField(
             text = "text area",
             hint = "type something...",
+            onValueChange = {},
+            textStyle = MaterialTheme.typography.h1,
+            onFocusChange = {})
+        Spacer(modifier = Modifier.height(16.dp))
+        CommentHintField(
+            text = "comment box",
+            hint = "comment box...",
+            isHintVisible = true,
             onValueChange = {},
             textStyle = MaterialTheme.typography.h1,
             onFocusChange = {})
